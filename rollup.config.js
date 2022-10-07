@@ -3,7 +3,7 @@ import resolve from '@rollup/plugin-node-resolve'
 import html from '@rollup/plugin-html';
 import { babel } from '@rollup/plugin-babel';
 import livereload from 'rollup-plugin-livereload'
-
+import replace from '@rollup/plugin-replace';
 
 import preprocess from 'svelte-preprocess';
 import tailwind from 'tailwindcss'
@@ -37,6 +37,12 @@ export default commandLineArgs => {
       resolve({ browser: true }),
       html({
         publicPath: './'
+      }),
+      replace({
+        'process.env.NODE_ENV': JSON.stringify('development'),
+        __buildDate__: () => JSON.stringify(new Date()),
+        __buildVersion: 1,
+        preventAssignment:true
       }),
       babel({ babelHelpers: 'bundled' }),
       commandLineArgs.configDebug && livereload(),

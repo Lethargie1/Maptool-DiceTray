@@ -10,6 +10,7 @@
             "name": "Open index.html",
             "file":"${workspaceFolder}/public/build/index.html",
             "webRoot": "${workspaceFolder}/src",
+            
 
         }
     ]
