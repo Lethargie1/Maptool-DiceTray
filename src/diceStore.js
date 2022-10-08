@@ -1,15 +1,18 @@
 import { writable } from "svelte/store";
 import produce from "immer";
 import {immerable} from "immer"
+import { v4 as uuidv4 } from 'uuid';
 
 export class DiceObj {
     [immerable] = true
     maximum;
     value;
+    id;
 
     constructor(maximum){
         this.maximum = maximum
         this.value = Math.floor(Math.random()*(this.maximum-1))+1
+        this.id = uuidv4()
     }
     static from(other){
         let newDice = new DiceObj(other.maximum)
@@ -20,7 +23,7 @@ export class DiceObj {
         return "1d"+this.maximum
     }
     
-    roll() { return  Math.floor(Math.random()*(this.maximum-1))+1 }
+    roll() { return Math.floor(Math.random()*(this.maximum-1))+1 }
 
 }
 

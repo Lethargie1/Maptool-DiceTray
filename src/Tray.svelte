@@ -1,0 +1,65 @@
+<script>
+    import { trayContent, PossibleDices } from "./diceStore.js";
+    import produce from "immer";
+    import Dice from "./Dice.svelte";
+    import { DiceObj } from "./diceStore.js";
+    import { flip } from 'svelte/animate';
+    import { fade } from 'svelte/transition';
+
+    $: trayTotal = $trayContent.reduce(
+        (previousTotal, currentDice)=> previousTotal+currentDice.value,
+        0)
+
+    function handleDiceAdd(possibleDice) {
+        trayContent.update(state => [...state, DiceObj.from(possibleDice)]);
+    }
+
+    function handleDiceRemove(index) {
+        trayContent.update(state => produce(state, draft => {draft.splice(index,1)}))
+    }
+
+    function handleDiceRemoveId(id) {
+        trayContent.update(state => {
+            let index = state.findIndex(dice => dice.id===id)
+            if (index === -1 || index.length > 1)
+                return state;
+            return produce(state, draft => {draft.splice(index,1)})
+        })
+    }
+</script>
+
+<div class=" bg-amber-700 p-4">
+    <div class="bg-amber-800 flex justify-start flex-wrap gap-4 p-4 relative min-h-full trayhole rounded-md">
+        {#each $trayContent as diceContent, i (diceContent.id)}
+            <div animate:flip transition:fade>
+                <Dice bind:diceContent={diceContent} removeDiceAction={handleDiceRemoveId}   />
+            </div>
+        {/each}
+        <div class="w-10 bg-slate-400 absolute bottom-2 right-2 flex justify-center items-center text-center font-mono text-xl py-1 px-10 rounded-md opacity-50">
+            {trayTotal}
+        </div>
+    </div>
+</div>
+<div class=" bg-amber-700 p-4 flex justify-center">
+    <div class="bg-amber-800 flex items-center gap-4 p-4 justify-center trayhole rounded-md" >
+        {#each PossibleDices as Rollable}
+            <div
+                class=" bg-red-600 w-14 h-14 flex items-center justify-center hover:ring-2 cursor-pointer"
+                on:click={() => handleDiceAdd(Rollable)}
+            >
+                <div class="text-center">
+                    {Rollable.display}
+                </div>
+            </div>
+        {/each}
+    </div>
+</div>
+{JSON.stringify($trayContent)}
+
+
+<style>
+    .trayhole{
+        box-shadow: inset 0 0px 17px 7px rgba(54, 23, 4, 0.7),
+                    0 0 4px 2px rgba(221, 160, 81, 0.3); /*bottom internal shadow*/  
+    }
+</style>
