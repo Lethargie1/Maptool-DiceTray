@@ -5,7 +5,7 @@
 
 
     export let diceContent = new DiceObj(6)
-    export let removeDiceAction = (id) => false
+    export let removeDiceAction = () => false
     export let allowRoll = true
 
     function handleClick(event) {
@@ -15,7 +15,7 @@
     }
     function handleContext(event){
         event.preventDefault()
-        removeDiceAction(diceContent.id)
+        removeDiceAction()
     }
 </script>
 
