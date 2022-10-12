@@ -4,7 +4,7 @@ import html from '@rollup/plugin-html';
 import { babel } from '@rollup/plugin-babel';
 import livereload from 'rollup-plugin-livereload'
 import replace from '@rollup/plugin-replace';
-
+import svg from 'rollup-plugin-svg'
 import preprocess from 'svelte-preprocess';
 import tailwind from 'tailwindcss'
 import autoprefixer from 'autoprefixer'
@@ -44,6 +44,7 @@ export default commandLineArgs => {
         __buildVersion: 1,
         preventAssignment:true
       }),
+      svg({base64:true}),
       babel({ babelHelpers: 'bundled' }),
       commandLineArgs.configDebug && livereload(),
     ]

@@ -14,7 +14,9 @@
     function handleDiceAdd(possibleDice) {
         trayContent.update((state) => [...state, DiceObj.from(possibleDice)]);
     }
-
+    function handleContext(event) {
+        event.preventDefault();
+    }
     function handleDiceRemove(index) {
         trayContent.update((state) => {
             state.splice(index, 1);
@@ -34,10 +36,11 @@
 
 <div class=" bg-amber-700 p-4">
     <div
-        class="bg-amber-800 flex justify-start flex-wrap gap-4 p-4 relative min-h-full trayhole rounded-md"
+        class="bg-amber-800 flex justify-start flex-wrap gap-0 p-4 relative min-h-full trayhole rounded-md"
+        on:contextmenu={handleContext}
     >
         {#each $trayContent as diceContent, i (diceContent.id)}
-            <div animate:flip="{{delay:400}}" transition:fade="{{duration: 400}}" >
+            <div animate:flip="{{delay:200, duration:1000}}" transition:fade="{{duration: 200}}" >
                 <Dice
                     bind:diceContent
                     removeDiceAction={() => handleDiceRemoveId(diceContent.id)}
@@ -57,12 +60,10 @@
     >
         {#each PossibleDices as Rollable}
             <div
-                class=" bg-red-600 w-14 h-14 flex items-center justify-center hover:ring-2 cursor-pointer"
+                class=" bg-transparent flex items-center justify-center hover:ring-2 cursor-pointer"
                 on:click={() => handleDiceAdd(Rollable)}
             >
-                <div class="text-center">
-                    {Rollable.display}
-                </div>
+            <Dice  diceContent={Rollable} allowRoll={false}  />
             </div>
         {/each}
     </div>
