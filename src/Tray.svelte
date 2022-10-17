@@ -5,23 +5,24 @@
     import { DiceObj } from "./diceStore.js";
     import { flip } from "svelte/animate";
     import { fade } from "svelte/transition";
+    import ModifierModal from "./ModifierModal.svelte";
 
+    let showModal = false;
+    let value = -1;
     $: trayTotal = $trayContent.reduce(
         (previousTotal, currentDice) => previousTotal + currentDice.value,
         0
     );
 
     function handleDiceAdd(possibleDice) {
+        if (possibleDice.maximum === 0) {
+            showModal = true;
+            return;
+        }
         trayContent.update((state) => [...state, DiceObj.from(possibleDice)]);
     }
     function handleContext(event) {
         event.preventDefault();
-    }
-    function handleDiceRemove(index) {
-        trayContent.update((state) => {
-            state.splice(index, 1);
-            return state;
-        });
     }
 
     function handleDiceRemoveId(id) {
@@ -32,6 +33,12 @@
             return state;
         });
     }
+
+    function handleModalModifier(e) {
+        let flatDice = new DiceObj(0)
+        flatDice.value = e.detail
+        trayContent.update((state) => [...state, flatDice]);
+    }
 </script>
 
 <div class=" bg-amber-700 p-4">
@@ -40,7 +47,10 @@
         on:contextmenu={handleContext}
     >
         {#each $trayContent as diceContent, i (diceContent.id)}
-            <div animate:flip="{{delay:200, duration:1000}}" transition:fade="{{duration: 200}}" >
+            <div
+                animate:flip={{ delay: 200, duration: 1000 }}
+                transition:fade={{ duration: 200 }}
+            >
                 <Dice
                     bind:diceContent
                     removeDiceAction={() => handleDiceRemoveId(diceContent.id)}
@@ -63,12 +73,14 @@
                 class=" bg-transparent flex items-center justify-center cursor-pointer"
                 on:click={() => handleDiceAdd(Rollable)}
             >
-            <Dice  diceContent={Rollable} displayMode={true}  />
+                <Dice diceContent={Rollable} displayMode={true} />
             </div>
         {/each}
     </div>
 </div>
+<ModifierModal bind:showModal on:success={handleModalModifier}/>
 {JSON.stringify($trayContent)}
+{value}
 
 <style>
     .trayhole {
