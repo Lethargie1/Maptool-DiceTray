@@ -60,10 +60,10 @@
     >
         {#each PossibleDices as Rollable}
             <div
-                class=" bg-transparent flex items-center justify-center hover:ring-2 cursor-pointer"
+                class=" bg-transparent flex items-center justify-center cursor-pointer"
                 on:click={() => handleDiceAdd(Rollable)}
             >
-            <Dice  diceContent={Rollable} allowRoll={false}  />
+            <Dice  diceContent={Rollable} displayMode={true}  />
             </div>
         {/each}
     </div>
