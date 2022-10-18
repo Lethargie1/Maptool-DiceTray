@@ -1,5 +1,5 @@
 <script>
-    import { trayContent, PossibleDices } from "./diceStore.js";
+    import { trayContent, PossibleDices, savedDiceCombination } from "./diceStore.js";
     import produce from "immer";
     import Dice from "./Dice.svelte";
     import { DiceObj } from "./diceStore.js";
@@ -8,6 +8,7 @@
     import ModifierModal from "./ModifierModal.svelte";
     import Icon from "./Icon.svelte";
     import TrayTotal from "./TrayTotal.svelte"
+    import TrayHole from "./TrayHole.svelte"
 
     let showModal = false;
     let value = -1;
@@ -52,11 +53,9 @@
     }
 </script>
 
-<div class=" bg-amber-700 p-4">
-    <div
-        class="bg-amber-800 flex justify-start flex-wrap gap-0 p-4 relative min-h-full trayhole rounded-md"
-        on:contextmenu={handleContext}
-    >
+<div class="bg-amber-700">
+<div class="p-4">
+    <TrayHole class="justify-start min-h-full">
         {#each $trayContent as diceContent, i (diceContent.id)}
             <div
                 animate:flip={{ delay: 200, duration: 1000 }}
@@ -69,12 +68,10 @@
             </div>
         {/each}
         <TrayTotal trayStore={trayContent} buttonAction={handleReroll}/>
-    </div>
+    </TrayHole>
 </div>
-<div class=" bg-amber-700 p-4 flex justify-center">
-    <div
-        class="bg-amber-800 flex items-center gap-4 p-4 justify-center trayhole rounded-md"
-    >
+<div class="p-4 flex justify-center">
+    <TrayHole class="justify-center">
         {#each PossibleDices as Rollable}
             <div
                 class=" bg-transparent flex items-center justify-center cursor-pointer"
@@ -83,8 +80,27 @@
                 <Dice diceContent={Rollable} displayMode={true} />
             </div>
         {/each}
-    </div>
+    </TrayHole>
 </div>
+<div class="p-4 flex justify-center">
+    
+    {#each $savedDiceCombination as diceComb}
+    <div
+        class="bg-amber-800 flex items-center gap-4 p-4 justify-center trayhole rounded-md"
+    >
+    {#each diceComb.diceList as dice}
+        <div  class=" bg-transparent flex items-center justify-center cursor-pointer">
+            <Dice diceContent={dice} displayMode={true} />
+            
+        </div>
+        {/each}
+    </div>
+    {/each}
+    
+</div>
+</div>
+
+
 <ModifierModal bind:showModal on:success={handleModalModifier} />
 {JSON.stringify($trayContent)}
 {value}

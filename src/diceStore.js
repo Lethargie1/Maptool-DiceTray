@@ -89,6 +89,14 @@ export let trayContent = new writable([
 ]);
 
 
+export let savedDiceCombination = new writable([
+    {
+        name: "initial combo",
+        diceList: [
+            new DiceObj(12), new DiceObj(12), new DiceObj(6)
+        ]
+    }
+])
 
 
 
