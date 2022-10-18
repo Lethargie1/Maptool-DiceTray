@@ -6,6 +6,7 @@
     import { flip } from "svelte/animate";
     import { fade } from "svelte/transition";
     import ModifierModal from "./ModifierModal.svelte";
+    import Icon from "./Icon.svelte";
 
     let showModal = false;
     let value = -1;
@@ -40,8 +41,13 @@
         trayContent.update((state) => [...state, flatDice]);
     }
 
-    function handleReroll(){
-        trayContent.update((state) => state.map(dc => {dc.needRoll=true; return dc}));
+    function handleReroll() {
+        trayContent.update((state) =>
+            state.map((dc) => {
+                dc.needRoll = true;
+                return dc;
+            })
+        );
     }
 </script>
 
@@ -62,12 +68,18 @@
             </div>
         {/each}
         <div
-            class=" bg-slate-400 absolute bottom-2 right-2 font-mono text-xl rounded-md opacity-50 flex items-center"
+            class=" bg-slate-400 absolute bottom-2 right-2 font-mono text-xl rounded-md bg-opacity-50 flex items-center h-10"
         >
-        <div >
-            <button class ="px-1 inline" on:click={handleReroll}>R</button>
-            <div class="inline-flex justify-center px-2">{trayTotal}</div>
-        </div>
+            <table class="table-auto">
+                <tbody><tr>
+                        <td ><button class="p-1 block rounded-md hover:bg-slate-400 active:bg-slate-500 hover:bg-opacity-30 active:bg-opacity-30"  title="Reroll all" on:click={handleReroll} >
+                                <Icon  name="reroll" class="w-6 h-6 border-black"/>
+                        </button></td>
+                        <td><div  class="px-2" >
+                                {trayTotal}
+                        </div></td>
+                </tr></tbody>
+            </table>
         </div>
     </div>
 </div>
