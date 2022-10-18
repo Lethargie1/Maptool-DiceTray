@@ -8,6 +8,8 @@ import svg from 'rollup-plugin-svg'
 import preprocess from 'svelte-preprocess';
 import tailwind from 'tailwindcss'
 import autoprefixer from 'autoprefixer'
+import url from '@rollup/plugin-url';
+
 
 export default commandLineArgs => {
   return {
@@ -47,6 +49,11 @@ export default commandLineArgs => {
       svg({base64:true}),
       babel({ babelHelpers: 'bundled' }),
       commandLineArgs.configDebug && livereload(),
+      url(
+        { 
+          exclude:['**/*.svg'],
+          limit: 0 
+        })
     ]
   }
 };

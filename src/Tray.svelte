@@ -9,13 +9,14 @@
     import Icon from "./Icon.svelte";
     import TrayTotal from "./TrayTotal.svelte"
     import TrayHole from "./TrayHole.svelte"
+    import SavedDiceTray from "./SavedDiceTray.svelte"
 
+    let displaySaved = false;
     let showModal = false;
-    let value = -1;
-    $: trayTotal = $trayContent.reduce(
-        (previousTotal, currentDice) => previousTotal + currentDice.value,
-        0
-    );
+    $: unsavedCombination = {
+        name: "new comb",
+        diceList: $trayContent
+    }
 
     function handleDiceAdd(possibleDice) {
         if (possibleDice.maximum === 0) {
@@ -24,9 +25,7 @@
         }
         trayContent.update((state) => [...state, DiceObj.from(possibleDice)]);
     }
-    function handleContext(event) {
-        event.preventDefault();
-    }
+ 
 
     function handleDiceRemoveId(id) {
         trayContent.update((state) => {
@@ -53,9 +52,9 @@
     }
 </script>
 
-<div class="bg-amber-700">
-<div class="p-4">
-    <TrayHole class="justify-start min-h-full">
+<div class="bg-yellow-50 flex flex-col items-center">
+<div class="p-4 w-full">
+    <TrayHole class="justify-start ">
         {#each $trayContent as diceContent, i (diceContent.id)}
             <div
                 animate:flip={{ delay: 200, duration: 1000 }}
@@ -82,32 +81,27 @@
         {/each}
     </TrayHole>
 </div>
-<div class="p-4 flex justify-center">
-    
-    {#each $savedDiceCombination as diceComb}
-    <div
-        class="bg-amber-800 flex items-center gap-4 p-4 justify-center trayhole rounded-md"
+
+<div 
+    class="h-10 w-64 bg-slate-300 hover:bg-slate-400 active:bg-slate-200 rounded-full flex items-center justify-center"
+    on:click={()=>{displaySaved = !displaySaved}}
     >
-    {#each diceComb.diceList as dice}
-        <div  class=" bg-transparent flex items-center justify-center cursor-pointer">
-            <Dice diceContent={dice} displayMode={true} />
-            
-        </div>
-        {/each}
-    </div>
+    <Icon name={displaySaved ? "arrowup" : "arrowdown"} class="m-6 h-6" />
+</div>
+{#if displaySaved}
+    {#each $savedDiceCombination as diceComb}
+    <SavedDiceTray savedDiceComb={diceComb} />
     {/each}
-    
-</div>
-</div>
+{/if}
+
+
 
 
 <ModifierModal bind:showModal on:success={handleModalModifier} />
 {JSON.stringify($trayContent)}
-{value}
+{displaySaved}
+</div>
 
 <style>
-    .trayhole {
-        box-shadow: inset 0 0px 17px 7px rgba(54, 23, 4, 0.7),
-            0 0 4px 2px rgba(221, 160, 81, 0.3); /*bottom internal shadow*/
-    }
+
 </style>

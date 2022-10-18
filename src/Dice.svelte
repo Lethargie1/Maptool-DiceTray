@@ -46,18 +46,18 @@
     />
     {#if !displayMode}
         {#if !diceContent.rolling}
-            <div class="text-white z-20">
+            <div class=" z-20 shadowy">
                 {diceContent.value}
             </div>
         {/if}
     {:else}
-        <div class="text-white z-20">
+        <div class=" z-20 shadowy">
             ?
         </div>
     {/if}
 </div>
 {#if displayMode}
-<div class="text-white z-20">
+<div class=" z-20 shadowy">
     {diceContent.display}
 </div>
 {/if}
@@ -78,5 +78,9 @@
     .rotating {
         animation-name: rotation;
         animation-duration: 2s;
+    }
+    .shadowy {
+        @apply font-bold;
+        text-shadow: 0 2px 2px white, 2px 0 2px white, -2px 0 2px white, 0 -2px 2px white;
     }
 </style>
