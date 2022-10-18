@@ -39,7 +39,7 @@
     <circle
 		cx="256"
 		cy="256"
-		r="250"
+		r="200"
 		fill="red" />
   </g>
 </svg>

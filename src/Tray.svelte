@@ -35,9 +35,13 @@
     }
 
     function handleModalModifier(e) {
-        let flatDice = new DiceObj(0)
-        flatDice.value = e.detail
+        let flatDice = new DiceObj(0);
+        flatDice.value = e.detail;
         trayContent.update((state) => [...state, flatDice]);
+    }
+
+    function handleReroll(){
+        trayContent.update((state) => state.map(dc => {dc.needRoll=true; return dc}));
     }
 </script>
 
@@ -58,9 +62,12 @@
             </div>
         {/each}
         <div
-            class="w-10 bg-slate-400 absolute bottom-2 right-2 flex justify-center items-center text-center font-mono text-xl py-1 px-10 rounded-md opacity-50"
+            class=" bg-slate-400 absolute bottom-2 right-2 font-mono text-xl rounded-md opacity-50 flex items-center"
         >
-            {trayTotal}
+        <div >
+            <button class ="px-1 inline" on:click={handleReroll}>R</button>
+            <div class="inline-flex justify-center px-2">{trayTotal}</div>
+        </div>
         </div>
     </div>
 </div>
@@ -78,7 +85,7 @@
         {/each}
     </div>
 </div>
-<ModifierModal bind:showModal on:success={handleModalModifier}/>
+<ModifierModal bind:showModal on:success={handleModalModifier} />
 {JSON.stringify($trayContent)}
 {value}
 
