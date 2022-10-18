@@ -7,6 +7,7 @@
     import { fade } from "svelte/transition";
     import ModifierModal from "./ModifierModal.svelte";
     import Icon from "./Icon.svelte";
+    import TrayTotal from "./TrayTotal.svelte"
 
     let showModal = false;
     let value = -1;
@@ -67,20 +68,7 @@
                 />
             </div>
         {/each}
-        <div
-            class=" bg-slate-400 absolute bottom-2 right-2 font-mono text-xl rounded-md bg-opacity-50 flex items-center h-10"
-        >
-            <table class="table-auto">
-                <tbody><tr>
-                        <td ><button class="p-1 block rounded-md hover:bg-slate-400 active:bg-slate-500 hover:bg-opacity-30 active:bg-opacity-30"  title="Reroll all" on:click={handleReroll} >
-                                <Icon  name="reroll" class="w-6 h-6 border-black"/>
-                        </button></td>
-                        <td><div  class="px-2" >
-                                {trayTotal}
-                        </div></td>
-                </tr></tbody>
-            </table>
-        </div>
+        <TrayTotal trayStore={trayContent} buttonAction={handleReroll}/>
     </div>
 </div>
 <div class=" bg-amber-700 p-4 flex justify-center">
