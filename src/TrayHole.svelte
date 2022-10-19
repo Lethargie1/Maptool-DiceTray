@@ -19,9 +19,8 @@
 
 <style>
     .hole {
-        @apply bg-yellow-100 flex flex-wrap gap-0 p-4 relative rounded-md;
-        box-shadow: inset 0 0px 17px 7px rgba(187, 137, 72, 0.7),
-            0 0 4px 2px rgba(182, 146, 99, 0.3); /*bottom internal shadow*/
+        @apply bg-yellow-100 flex flex-wrap gap-0 p-4 relative rounded-md border-2 border-slate-700 border-opacity-10;
+        box-shadow: 3px 3px 8px 0px rgb(182, 164, 60) inset, 1px 1px 7px 2px #ffffff, 0px 0px 8px 0px rgb(182, 164, 60) inset
         
     }
 

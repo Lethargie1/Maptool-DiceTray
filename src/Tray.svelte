@@ -39,7 +39,7 @@
 
 </script>
 
-<div class="bg-yellow-50 flex flex-col items-center">
+<div class="bg-yellow-100 flex flex-col items-center">
     <div class=" w-full">
         <UnsavedDiceTray />
     </div>
@@ -57,7 +57,7 @@
 </div>
 
 <div 
-    class="h-10 w-64 bg-slate-300 hover:bg-slate-400 active:bg-slate-200 rounded-full flex items-center justify-center"
+    class="button"
     on:click={()=>{displaySaved = !displaySaved}}
     >
     <Icon name={displaySaved ? "arrowup" : "arrowdown"} class="m-6 h-6" />
@@ -72,10 +72,14 @@
 
 
 <ModifierModal bind:showModal on:success={handleModalModifier} />
-{JSON.stringify($trayContent)}
-{displaySaved}
+
 </div>
 
 <style>
+    .button{
+        @apply h-10 w-64 bg-slate-300 hover:bg-slate-400 active:bg-slate-200 rounded-full flex items-center justify-center;
+        box-shadow: -4px -4px 10px -2px rgb(148 163 184) inset, 4px 4px 10px -2px #ffffff inset,
+            0px 0px 3px 0px rgb(182, 164, 60), 2px 2px 3px -1px #ffffff
+    }
 
 </style>

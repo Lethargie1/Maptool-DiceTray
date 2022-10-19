@@ -2,7 +2,6 @@
     import { DiceObj } from "./diceStore.js";
     import { onDestroy } from 'svelte';
 
-
     export let diceContent = new DiceObj(6);
     export let removeDiceAction = () => false;
     export let displayMode = false;

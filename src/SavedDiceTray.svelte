@@ -27,7 +27,8 @@
 
 </script>
 
-<div class="p-2 z-0 relative flex w-full">
+<div class="globalContainer">
+    <div class="flex shadowy w-full">
     <div  class="leftHeader" >
         <div class="flex justify-around">
             <div class:iconWrapper={true} on:click={()=>replaceActiveTray()}>
@@ -52,18 +53,29 @@
         </TrayHole>
     </div>
 </div>
+</div>
 
 <style>
     .iconWrapper {
-        @apply p-2 hover:bg-slate-500 hover:bg-opacity-50 rounded-md
+        @apply  hover:bg-slate-500 hover:bg-opacity-50 rounded-md p-2;
+        box-shadow: -5px -5px 7px -3px rgb(182, 164, 60) inset, 5px 5px 7px -3px #ffffff inset,
+            -1px -1px 3px -1px rgb(182, 164, 60), 2px 2px 3px -1px #ffffff
     }
     .leftHeader {
-        @apply flex justify-start flex-col rounded-l-md gap-2 items-stretch w-40 border-r-0 border-2 border-slate-700 border-opacity-50 bg-yellow-100
+        @apply p-2 flex justify-start flex-col rounded-l-md gap-2 items-stretch w-40  
     }
     .rightContainer{
-        @apply p-2  rounded-r-md flex-grow border-l-0 border-2 border-slate-700 border-opacity-50 bg-yellow-100
+        @apply  p-2 rounded-r-md flex-grow;
     }
     .diceWrapper{
         @apply bg-transparent flex items-center justify-center cursor-pointer
+    }
+    .globalContainer{
+        @apply p-4 z-0 relative flex w-full;
+        
+    }
+    .shadowy{
+        @apply  rounded-md border-2 border-slate-700 border-opacity-10 bg-yellow-50;
+        box-shadow: 5px 0px 8px 0px rgb(182, 164, 60), 0 5px 8px 0px rgb(182, 164, 60), -1px -1px 7px 1px #ffffff inset
     }
 </style>

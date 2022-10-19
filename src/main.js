@@ -1,11 +1,16 @@
 
 import App from './App.svelte';
 
-const app = new App({
-	target: document.body,
-	props: {
-		name: 'world'
-	}
-});
 
-export default app;
+try {
+	const app = new App({
+		target: document.body,
+		props: {
+			name: 'world'
+		}
+	});
+}
+catch (err) {
+	console.log(err)
+}
+
