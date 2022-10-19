@@ -26,7 +26,7 @@
 
     $: useImageAsBackground = true
 
-    function handleClick(event) {
+    function handleClick() {
         if (displayMode) return;
         //rolling = true;
         diceContent.needRoll=diceContent.askRoll();
@@ -36,6 +36,10 @@
         event.preventDefault();
         removeDiceAction();
     }
+    function handleMouseDown(event){
+       let a=2; 
+       a=3;
+    }
 </script>
 
 <div class="hover:ring-2 flex flex-col items-center"
@@ -44,6 +48,7 @@
     class="bg-transparent flex justify-center items-center text-center  select-none relative w-14 h-14 z-0"
     on:click={handleClick}
     on:contextmenu={handleContext}
+    on:mousedown={handleMouseDown}
 >
     <img
         class="z-10 w-14 h-14"

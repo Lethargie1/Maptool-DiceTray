@@ -1,0 +1,14 @@
+{
+  "name": "lib:DiceTray",
+  "version": "0.0.1",
+  "website": "",
+  "gitUrl": "",
+  "authors": ["Fabrice Valade"],
+  "license": "ZLib",
+  "namespace": "DiceTray",
+  "description": "A lightweigth web based dice roller",
+  "shortDescription": "A lightweigth web based dice roller",
+  "allowsUriAccess": true,
+  "licenseFile": "license.txt",
+  "readMeFile": "README"
+}

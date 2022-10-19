@@ -9,18 +9,22 @@ import preprocess from 'svelte-preprocess';
 import tailwind from 'tailwindcss'
 import autoprefixer from 'autoprefixer'
 import url from '@rollup/plugin-url';
-
+import sizes from 'rollup-plugin-sizes';
+import { terser } from "rollup-plugin-terser";
+import css from 'rollup-plugin-css-only'
+import { v4 as uuidv4 } from 'uuid';
 
 export default commandLineArgs => {
+  let debug = commandLineArgs.configDebug
   return {
     input: ['src/main.js'],
     output: [
       {
-        dir: commandLineArgs.configDebug ? 'public/build/' : 'public/release/',
+        dir: debug ? 'public/build/' : 'public/release/',
         format: 'iife',
         name: 'sveltemodule',
-        sourcemap: commandLineArgs.configDebug ? 'inline' : false,
-        entryFileNames: commandLineArgs.configDebug ? '[name].js' : '[name]-[hash].js'
+        sourcemap: debug ? 'inline' : false,
+        entryFileNames: debug ? '[name].js' : '[name]-[hash].js'
       },
     ],
     plugins: [
@@ -34,26 +38,29 @@ export default commandLineArgs => {
               ]
           }
         }),
-        emitCss: false,
+        emitCss: !debug,
       }),
+      debug ? null : css({ output: debug ? null : "bundle-"+uuidv4()+".css" }),
       resolve({ browser: true }),
       html({
         publicPath: './'
       }),
       replace({
-        'process.env.NODE_ENV': JSON.stringify('development'),
+        'process.env.NODE_ENV': debug ? JSON.stringify('development') : JSON.stringify('production'),
         __buildDate__: () => JSON.stringify(new Date()),
         __buildVersion: 1,
         preventAssignment:true
       }),
       svg({base64:true}),
       babel({ babelHelpers: 'bundled' }),
-      commandLineArgs.configDebug && livereload(),
+      debug && livereload(),
       url(
         { 
           exclude:['**/*.svg'],
           limit: 0 
-        })
+        }),
+        sizes(),
+        !debug && terser()
     ]
   }
 };

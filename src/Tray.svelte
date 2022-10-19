@@ -1,13 +1,9 @@
 <script>
     import { trayContent, PossibleDices, savedDiceCombination } from "./diceStore.js";
-    import produce from "immer";
     import Dice from "./Dice.svelte";
     import { DiceObj } from "./diceStore.js";
-    import { flip } from "svelte/animate";
-    import { fade } from "svelte/transition";
     import ModifierModal from "./ModifierModal.svelte";
     import Icon from "./Icon.svelte";
-    import TrayTotal from "./TrayTotal.svelte"
     import TrayHole from "./TrayHole.svelte"
     import SavedDiceTray from "./SavedDiceTray.svelte"
     import UnsavedDiceTray from "./UnsavedDiceTray.svelte"
