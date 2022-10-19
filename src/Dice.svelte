@@ -62,7 +62,7 @@
         {/if}
     {:else}
         <div class=" z-20 shadowy">
-            ?
+            {!diceContent.maximum && diceContent.value ? diceContent.value : "?"}
         </div>
     {/if}
 </div>

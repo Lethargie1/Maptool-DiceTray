@@ -34,7 +34,9 @@ export class DiceObj {
     get display() {
         switch (this.maximum) {
             case 0:
-                return "+X"
+                if (this.value===0)
+                    return "+X"
+                return "+"+this.value
             default:
                 return "1d" + this.maximum
         }
@@ -89,9 +91,11 @@ export class DiceObj {
 
 }
 
-export let trayContent = new writable([
-    new DiceObj(10)
-]);
+export let trayContent = new writable(
+    {
+        name: "New Name",
+        diceList:[new DiceObj(10)]
+});
 
 
 export let savedDiceCombination = new writable([

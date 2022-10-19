@@ -8,41 +8,51 @@
     import { trayContent, savedDiceCombination } from "./diceStore.js";
     import { v4 as uuidv4 } from 'uuid';
     import { DiceObj } from "./diceStore.js";
-    export let trayName = "No-name";
+
 
     function handleDiceRemoveId(id) {
         trayContent.update((state) => {
-            let index = state.findIndex((dice) => dice.id === id);
+            let index = state.diceList.findIndex((dice) => dice.id === id);
             if (index === -1 || index.length > 1) return state;
-            state.splice(index, 1);
+            state.diceList.splice(index, 1);
             return state;
         });
     }
 
     function handleReroll() {
-        trayContent.update((state) =>
-            state.map((dc) => {
+        trayContent.update((state) =>{
+            state.diceList = state.diceList.map((dc) => {
                 dc.needRoll = dc.askRoll();
                 return dc;
             })
+            return state
+        }
         );
     }
 
     function handleSave() {
         savedDiceCombination.update((state) => {
-            let nameList = state.map((diceComb) => diceComb.name);
-            let finalName;
-            if (nameList.includes(trayName)) finalName = trayName + " copy";
-            else finalName = trayName;
+            if($trayContent.diceList.length ===0)
+                return state
+            let index = state.findIndex((diceComb) =>diceComb.name === $trayContent.name)
 
             let newComb = {
-                name: finalName,
+                name: $trayContent.name,
                 id: uuidv4(),
-                diceList: $trayContent,
+                diceList: $trayContent.diceList.map(dice=>DiceObj.from(dice)),
             };
-
-            return [...state, newComb];
+            if (index == -1)
+                return [...state, newComb];
+            state.splice(index, 1, newComb)
+            return state
         });
+    }
+
+    function handleDeleteAll(){
+        trayContent.update(state =>{
+            state.diceList=[]
+            return state
+        })
     }
 </script>
 
@@ -52,15 +62,18 @@
             <div class:iconWrapper={true} on:click={() => handleSave()}>
                 <Icon name="save" class="w-8 h-8" />
             </div>
+            <div class:iconWrapper={true} on:click={()=>handleDeleteAll()}>
+                <Icon name="garbage" class="stroke-red-700 w-8 h-8"/>
+            </div>
         </div>
         <input
-            bind:value={trayName}
+            bind:value={$trayContent.name}
             class="rounded-sm border-slate-500 text-center font-semibold text-lg p-1 bg-transparent"
         />
     </div>
     <div  class="rightContainer" >
         <TrayHole class="justify-start">
-            {#each $trayContent as dice, i (dice.id)}
+            {#each $trayContent.diceList as dice, i (dice.id)}
                 <div
                     animate:flip={{ delay: 200, duration: 1000 }}
                     transition:fade={{ duration: 200 }}

@@ -21,13 +21,19 @@
             showModal = true;
             return;
         }
-        trayContent.update((state) => [...state, DiceObj.from(possibleDice)]);
+        trayContent.update((state) => {
+            state.diceList = [...state.diceList, DiceObj.from(possibleDice)]
+            return state
+        });
     }
  
     function handleModalModifier(e) {
         let flatDice = new DiceObj(0);
         flatDice.value = e.detail;
-        trayContent.update((state) => [...state, flatDice]);
+        trayContent.update((state) => {
+            state.diceList = [...state.diceList, flatDice]
+            return state
+        });
     }
 
 
@@ -67,7 +73,6 @@
 
 <ModifierModal bind:showModal on:success={handleModalModifier} />
 {JSON.stringify($trayContent)}
-{JSON.stringify($savedDiceCombination)}
 {displaySaved}
 </div>
 

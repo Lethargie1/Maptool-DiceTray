@@ -19,7 +19,9 @@
 
     function replaceActiveTray(){
         trayContent.update(state => {
-            return savedDiceComb.diceList.map(dice => DiceObj.from(dice))
+            state.name = savedDiceComb.name
+            state.diceList =  savedDiceComb.diceList.map(dice => DiceObj.from(dice))
+            return state
         })
     }
 

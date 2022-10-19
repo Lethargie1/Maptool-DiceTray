@@ -4,7 +4,7 @@
     export let trayStore = null;
     export let buttonAction = null;
 
-    $: trayTotal = $trayStore.reduce(
+    $: trayTotal = $trayStore.diceList.reduce(
         (previousTotal, currentDice) => previousTotal + currentDice.value,
         0
     );
