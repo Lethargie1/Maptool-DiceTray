@@ -70,7 +70,12 @@ export class DiceObj {
                 return true
         }
     }
-
+    askRoll(){
+        if (this.rolling)
+            return false
+        else
+            return true
+    }
     roll() { 
         switch (this.maximum) {
             case 0:

@@ -22,7 +22,7 @@
     function handleReroll() {
         trayContent.update((state) =>
             state.map((dc) => {
-                dc.needRoll = true;
+                dc.needRoll = dc.askRoll();
                 return dc;
             })
         );
@@ -47,28 +47,24 @@
 </script>
 
 <div class="p-2 z-0 relative flex w-full ">
-    <div
-        class="flex justify-start flex-col rounded-l-md gap-2 items-stretch w-40 border-r-0 border-2 border-slate-700 border-opacity-50 bg-yellow-100"
-    >
+    <div  class="leftHeader"  >
         <div class="flex justify-around">
             <div class:iconWrapper={true} on:click={() => handleSave()}>
                 <Icon name="save" class="w-8 h-8" />
             </div>
         </div>
         <input
-            value={trayName}
+            bind:value={trayName}
             class="rounded-sm border-slate-500 text-center font-semibold text-lg p-1 bg-transparent"
         />
     </div>
-    <div
-        class="p-2  rounded-r-md flex-grow border-l-0 border-2 border-slate-700 border-opacity-50 bg-yellow-100"
-    >
+    <div  class="rightContainer" >
         <TrayHole class="justify-start">
             {#each $trayContent as dice, i (dice.id)}
                 <div
                     animate:flip={{ delay: 200, duration: 1000 }}
                     transition:fade={{ duration: 200 }}
-                    class=" bg-transparent flex items-center justify-center cursor-pointer"
+                    class="diceWrapper"
                 >
                     <Dice
                         bind:diceContent={dice}
@@ -85,5 +81,14 @@
 <style>
     .iconWrapper {
         @apply p-2 hover:bg-slate-500 hover:bg-opacity-50 rounded-md;
+    }
+    .leftHeader {
+        @apply flex justify-start flex-col rounded-l-md gap-2 items-stretch w-40 border-r-0 border-2 border-slate-700 border-opacity-50 bg-yellow-100
+    }
+    .rightContainer{
+        @apply p-2  rounded-r-md flex-grow border-l-0 border-2 border-slate-700 border-opacity-50 bg-yellow-100
+    }
+    .diceWrapper{
+        @apply bg-transparent flex items-center justify-center cursor-pointer
     }
 </style>

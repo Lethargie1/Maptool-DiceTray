@@ -1,15 +1,25 @@
 <script>
     import { DiceObj } from "./diceStore.js";
+    import { onDestroy } from 'svelte';
+
 
     export let diceContent = new DiceObj(6);
     export let removeDiceAction = () => false;
     export let displayMode = false;
     //let rolling = false;
+    let currentRollingTimeout = null
+    onDestroy(() => {
+        if(currentRollingTimeout)
+            clearTimeout(currentRollingTimeout)
+	});
 
     $: if (diceContent.needRoll && diceContent.canRoll && !displayMode){
         diceContent.needRoll = false;
         diceContent.rolling = true;
-        setTimeout(() => {
+        if(currentRollingTimeout)
+            clearTimeout(currentRollingTimeout)
+
+        currentRollingTimeout = setTimeout(() => {
             diceContent.value = diceContent.roll();
             diceContent.rolling = false;
         }, 2000);
@@ -20,7 +30,7 @@
     function handleClick(event) {
         if (displayMode) return;
         //rolling = true;
-        diceContent.needRoll=true;
+        diceContent.needRoll=diceContent.askRoll();
         
     }
     function handleContext(event) {
