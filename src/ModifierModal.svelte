@@ -10,10 +10,12 @@
 
 </script>
 {#if showModal}
-    <Modal on:close={()=>{showModal=false ; success()}}>
+    <Modal on:accept={()=>{showModal=false ; success()}} on:cancel={()=>{showModal=false}}>
+        <div class="flex flex-col items-center" slot="header">
+            Ajouter un modificateur
+        </div>
         <div class="flex flex-col items-center">
-        Ajouter un modificateur
-        <input type=number bind:value class="text-center" />
+            <input type=number bind:value class="text-center border-2 border-slate-400 p-2 rounded-sm" />
         </div>
     </Modal>
 {/if}

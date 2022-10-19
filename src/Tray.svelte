@@ -43,7 +43,7 @@
     <div class=" w-full">
         <UnsavedDiceTray />
     </div>
-<div class="p-4 flex justify-center">
+<div class="p-4 flex justify-center relative">
     <TrayHole class="justify-center">
         {#each PossibleDices as Rollable}
             <div
@@ -70,9 +70,9 @@
 
 
 
-
+<div class="relative z-20">
 <ModifierModal bind:showModal on:success={handleModalModifier} />
-
+</div>
 </div>
 
 <style>

@@ -2,13 +2,13 @@
 	import { createEventDispatcher, onDestroy } from 'svelte';
 
 	const dispatch = createEventDispatcher();
-	const close = () => dispatch('close');
-
+	const accept = () => dispatch('accept');
+	const cancel = () => dispatch('cancel');
 	let modal;
 
 	const handle_keydown = e => {
 		if (e.key === 'Escape') {
-			close();
+			cancel();
 			return;
 		}
 
@@ -39,16 +39,19 @@
 
 <svelte:window on:keydown={handle_keydown}/>
 
-<div class="modal-background" on:click={close}></div>
+<div class="modal-background " on:click={cancel}></div>
 
-<div class="modal" role="dialog" aria-modal="true" bind:this={modal}>
+<div class="modal " role="dialog" aria-modal="true" bind:this={modal}>
 	<slot name="header"></slot>
-	<hr>
+	<hr class="py-2">
 	<slot></slot>
-	<hr>
+	<hr class="py-2">
 
 	<!-- svelte-ignore a11y-autofocus -->
-	<button autofocus on:click={close}>close</button>
+	<div class="flex justify-around items-stretch">
+		<button autofocus on:click={accept}>accept</button>
+		<button on:click={cancel}>cancel</button>
+	</div>
 </div>
 
 <style>
@@ -76,6 +79,7 @@
 	}
 
 	button {
+		@apply px-7 hover:bg-slate-400 py-2 rounded-md;
 		display: block;
 	}
 </style>
