@@ -7,27 +7,15 @@
     import { fade } from "svelte/transition";
     import { trayContent, savedDiceCombination } from "./diceStore.js";
     import { v4 as uuidv4 } from 'uuid';
-    import { DiceObj } from "./diceStore.js";
+    import { DiceObj } from "./DiceObj.js";
 
 
-    function handleDiceRemoveId(id) {
-        trayContent.update((state) => {
-            let index = state.diceList.findIndex((dice) => dice.id === id);
-            if (index === -1 || index.length > 1) return state;
-            state.diceList.splice(index, 1);
-            return state;
-        });
+    function handleDiceRemoveId(dice) {
+        trayContent.remove(dice)
     }
 
     function handleReroll() {
-        trayContent.update((state) =>{
-            state.diceList = state.diceList.map((dc) => {
-                dc.needRoll = dc.askRoll();
-                return dc;
-            })
-            return state
-        }
-        );
+        $trayContent.diceList.forEach(x => trayContent.startRoll(x))
     }
 
     function handleSave() {
@@ -49,10 +37,7 @@
     }
 
     function handleDeleteAll(){
-        trayContent.update(state =>{
-            state.diceList=[]
-            return state
-        })
+        trayContent.clear()
     }
 </script>
 
@@ -68,7 +53,7 @@
             </div>
         </div>
         <input
-            bind:value={$trayContent.name}
+            value={$trayContent.name}
             class="rounded-sm border-slate-500 text-center font-semibold text-lg p-1 bg-transparent"
         />
     </div>
@@ -81,9 +66,10 @@
                     class="diceWrapper"
                 >
                     <Dice
-                        bind:diceContent={dice}
+                        diceContent={dice}
                         displayMode={false}
-                        removeDiceAction={() => handleDiceRemoveId(dice.id)}
+                        rollAction={trayContent.startRoll}
+                        removeDiceAction={() => handleDiceRemoveId(dice)}
                     />
                 </div>
             {/each}

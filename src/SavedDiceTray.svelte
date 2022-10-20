@@ -3,7 +3,6 @@
     import Dice from "./Dice.svelte";
     import Icon from "./Icon.svelte";
     import { trayContent, savedDiceCombination } from "./diceStore.js";
-    import { DiceObj } from "./diceStore.js";
 
     export let savedDiceComb = null;
 
@@ -18,11 +17,7 @@
     }
 
     function replaceActiveTray(){
-        trayContent.update(state => {
-            state.name = savedDiceComb.name
-            state.diceList =  savedDiceComb.diceList.map(dice => DiceObj.from(dice))
-            return state
-        })
+        trayContent.replace(savedDiceComb.diceList)
     }
 
 </script>

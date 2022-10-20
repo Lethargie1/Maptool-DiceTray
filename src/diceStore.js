@@ -1,101 +1,102 @@
 import { writable } from "svelte/store";
 import { v4 as uuidv4 } from 'uuid';
 
-import importedSvgStrd20 from "../assets/d20.svg";
-import importedSvgStrd12 from "../assets/d12.svg";
-import importedSvgStrd10 from "../assets/d10.svg";
-import importedSvgStrd8 from "../assets/d8.svg";
-import importedSvgStrd6 from "../assets/d6.svg";
-import importedSvgStrd4 from "../assets/d4.svg";
-import importedSvgStrdx from "../assets/+x.svg";
+import { DiceObj } from "./DiceObj";
 
-export class DiceObj {
-    maximum;
-    value;
-    id;
-    rolling;
-    needRoll;
-
-    constructor(maximum) {
-        this.maximum = maximum
-        this.value = 0
-        this.id = uuidv4()
-        this.rolling= false;
-        this.needRoll=true;
-    }
-    static from(other) {
-        let newDice = new DiceObj(other.maximum)
-        if (other.maximum===0){
-            newDice.value= other.value;
-        }
-        return newDice;
-    }
-
-    get display() {
-        switch (this.maximum) {
-            case 0:
-                if (this.value===0)
-                    return "+X"
-                return "+"+this.value
-            default:
-                return "1d" + this.maximum
-        }
-        
-    }
-
-    get svg() {
-        switch (this.maximum) {
-            case 20:
-                return importedSvgStrd20
-            case 12:
-                return importedSvgStrd12
-            case 10:
-                return importedSvgStrd10
-            case 8:
-                return importedSvgStrd8
-            case 6:
-                return importedSvgStrd6
-            case 4:
-                return importedSvgStrd4
-            case 0:
-                return importedSvgStrdx
-            default:
-                return importedSvgStrd20
-        }
-    }
-
-    get canRoll() {
-        switch (this.maximum) {
-            case 0:
-                return false
-            default:
-                return true
-        }
-    }
-    askRoll(){
-        if (this.rolling)
-            return false
-        else
-            return true
-    }
-    roll() { 
-        switch (this.maximum) {
-            case 0:
-                return this.value
-            default:
-                return Math.floor(Math.random() * (this.maximum)) + 1 
-        }
-        
-    }
+export let trayContent = createTrayStore()
 
 
+function createTrayStore() {
+    const { subscribe, update } = writable(
+        {
+            name: "New Name",
+            diceList: [new DiceObj(10)]
+        });
+
+    return {
+        subscribe,
+        add: createAddDice(update),
+        remove: createRemoveDice(update),
+        startRoll: createStartRollDice(update),
+        rollConclude: createRollConclude(update),
+        clear: createClearDice(update),
+        replace: createReplaceAllDice(update)
+    };
 }
 
-export let trayContent = new writable(
-    {
-        name: "New Name",
-        diceList:[new DiceObj(10)]
-});
+function createAddDice(update) {
+    return (dice) => {
+        const newDice = DiceObj.from(dice)
+        update((state) => {
+            state.diceList = [...state.diceList, newDice]
+            return state
+        });
+        trayContent.startRoll(newDice)
+    }
+}
+
+function createRemoveDice(update) {
+    return (dice) => {
+        update((state) => {
+            let index = state.diceList.findIndex((d) => d.id === dice.id);
+            if (index === -1 || index.length > 1) return state;
+            state.diceList.splice(index, 1);
+            return state;
+        });
+    }
+}
+
+function createStartRollDice(update) {
+    return (dice) => {
+        update((state) => {
+            let selected = state.diceList.find((d) => d.id === dice.id);
+            if (!selected) return state;
+            selected.rolling = true
+            DiceObj.clearCallback(selected)
+            selected.rollingCallback = setTimeout(() => {
+                trayContent.rollConclude(selected)
+            }, 2000);
+            return state
+        })
+    }
+}
+
+function createRollConclude(update) {
+    return (dice) => {
+        update((state) => {
+            let selected = state.diceList.find((d) => d.id === dice.id);
+            if (!selected) return state;
+            selected.rolling = false
+            selected.value = selected.roll()
+            DiceObj.clearCallback(selected)
+            return state
+        })
+    }
+}
+
+
+function replaceStateDiceList(state, newList){
+    state.diceList.forEach(x => {
+        DiceObj.clearCallback(x)
+    })
+    state.diceList = newList
+    return state;
+}
+
+function createClearDice(update) {
+    return () => {
+        update(state => replaceStateDiceList(state,[]))
+    }
+}
+
+function createReplaceAllDice(update) {
+    return (newDiceList) => {
+        const genList = newDiceList.map(x => DiceObj.from(x))
+        update(state => replaceStateDiceList(state,genList))
+        genList.forEach( x=> trayContent.startRoll(x))
+    }
+}
+
 
 
 export let savedDiceCombination = new writable([

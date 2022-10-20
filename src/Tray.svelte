@@ -1,7 +1,7 @@
 <script>
     import { trayContent, PossibleDices, savedDiceCombination } from "./diceStore.js";
     import Dice from "./Dice.svelte";
-    import { DiceObj } from "./diceStore.js";
+    import { DiceObj } from "./DiceObj.js";
     import ModifierModal from "./ModifierModal.svelte";
     import Icon from "./Icon.svelte";
     import TrayHole from "./TrayHole.svelte"
@@ -17,10 +17,7 @@
             showModal = true;
             return;
         }
-        trayContent.update((state) => {
-            state.diceList = [...state.diceList, DiceObj.from(possibleDice)]
-            return state
-        });
+        trayContent.add(possibleDice)
     }
  
     function handleModalModifier(e) {
@@ -63,7 +60,7 @@
     <SavedDiceTray bind:savedDiceComb={diceComb} />
     {/each}
 {/if}
-
+{JSON.stringify($trayContent)}
 
 
 <div class="relative z-20">
