@@ -8,6 +8,14 @@
     import { trayContent, savedDiceCombination } from "./diceStore.js";
     import { v4 as uuidv4 } from 'uuid';
     import { DiceObj } from "./DiceObj.js";
+    import {onDestroy} from "svelte"
+
+
+    let trayName;
+    const unsubscribe = trayContent.subscribe((value) => (trayName = value.name));
+    onDestroy(unsubscribe);
+    //let trayName = $trayContent.name
+    $: trayContent.changeName(trayName)
 
 
     function handleDiceRemoveId(dice) {
@@ -53,7 +61,7 @@
             </div>
         </div>
         <input
-            value={$trayContent.name}
+            bind:value={trayName}
             class="rounded-sm border-slate-500 text-center font-semibold text-lg p-1 bg-transparent"
         />
     </div>
@@ -68,7 +76,7 @@
                     <Dice
                         diceContent={dice}
                         displayMode={false}
-                        rollAction={trayContent.startRoll}
+                        rollAction={() => trayContent.startRoll(dice)}
                         removeDiceAction={() => handleDiceRemoveId(dice)}
                     />
                 </div>

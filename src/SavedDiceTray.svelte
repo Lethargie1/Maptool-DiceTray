@@ -17,7 +17,9 @@
     }
 
     function replaceActiveTray(){
+        trayContent.changeName(savedDiceComb.name)
         trayContent.replace(savedDiceComb.diceList)
+        
     }
 
 </script>

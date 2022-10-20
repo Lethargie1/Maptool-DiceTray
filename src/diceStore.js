@@ -15,6 +15,9 @@ function createTrayStore() {
 
     return {
         subscribe,
+        changeName: (name) => {
+            update( state => {state.name=name; return {...state}})
+        }  ,
         add: createAddDice(update),
         remove: createRemoveDice(update),
         startRoll: createStartRollDice(update),
