@@ -9,6 +9,9 @@
     "release": "rmdir \"./public/release/\" /q /s && npx rollup --config rollup.config.js",
     "quickrelease": "npx rollup --config rollup.config.js"
   },
+  "engines": {
+    "node": ">=8.10.0"
+  },
   "author": "",
   "license": "ISC",
   "devDependencies": {
@@ -21,8 +24,6 @@
     "@rollup/plugin-replace": "^4.0.0",
     "@rollup/plugin-url": "^8.0.0",
     "autoprefixer": "^10.4.12",
-    "eslint": "^8.25.0",
-    "eslint-plugin-svelte3": "^4.0.0",
     "postcss": "^8.4.16",
     "postcss-load-config": "^4.0.1",
     "rollup": "^2.79.1",

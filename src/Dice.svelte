@@ -9,7 +9,6 @@
     export let displayMode = false;
 
 
-
     $: useImageAsBackground = true
 
     function handleClick() {
@@ -28,7 +27,7 @@
 
 </script>
 
-<div class="hover:ring-2 flex flex-col items-center">
+<div class="hover:ring-2 flex flex-col items-center" >
     <div
         class="bg-transparent flex justify-center items-center text-center  select-none relative w-14 h-14 z-0"
         on:click={handleClick}

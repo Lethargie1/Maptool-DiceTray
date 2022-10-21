@@ -13,9 +13,10 @@ export class DiceObj {
     value;
     id;
     rolling;
-    needRoll;
-    rollid;
+    
     rollingCallback;
+    rollid;
+    
 
     constructor(maximum) {
         this.maximum = maximum;
@@ -32,7 +33,15 @@ export class DiceObj {
         }
         return newDice;
     }
-
+    static infoFrom(other){
+        return {
+            maximum: other.maximum,
+            value: other.value,
+            rolling: other.rolling,
+            id: other.id,
+            display: other.display
+        }
+    }
     get display() {
         switch (this.maximum) {
             case 0:
@@ -74,15 +83,7 @@ export class DiceObj {
                 return true;
         }
     }
-    static askRoll(dice) {
-        if (dice.rolling || !dice.canRoll)
-            return dice;
-        else {
-            dice.needRoll = true;
-            return dice;
-        }
 
-    }
     roll() {
         switch (this.maximum) {
             case 0:

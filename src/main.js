@@ -1,6 +1,12 @@
 
 import App from './App.svelte';
+import { attachMessenger} from './diceStore';
+import { messager } from './macroCom';
 
+
+
+
+attachMessenger(messager)
 
 try {
 	new App({
