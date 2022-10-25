@@ -74,7 +74,7 @@
 
     .rotating {
         animation-name: rotation;
-        animation-duration: 1s;
+        animation-duration: 0.5s;
         animation-timing-function: linear;
         animation-iteration-count: infinite;
     }

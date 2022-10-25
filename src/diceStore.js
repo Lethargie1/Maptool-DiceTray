@@ -95,7 +95,7 @@ function createStartRollDice(update) {
             DiceObj.clearCallback(selected)
             selected.rollingCallback = setTimeout(() => {
                 trayContent.rollConclude(selected)
-            }, 2000);
+            }, 1000);
             return state
         })
     }
