@@ -233,9 +233,13 @@ const formatter = (function() {
             },
             0
         );
-    
+        const diceContent = wrappedDices.reduce( (prev, current,i)=>{
+            let a = i%8
+            let linechanger = i > 0 && (a === 0) ? "</tr><tr>" : ""
+            return prev+=`${linechanger}<td>${current}</td>`
+        },"") 
         return `<table>
-                <tr><td>${wrappedDices.join("</td>")}</td></tr>
+                <tr>${diceContent}</tr>
                 </table> result: ${trayTotal}`
     }
 

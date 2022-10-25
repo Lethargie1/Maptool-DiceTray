@@ -17,7 +17,7 @@ function createTrayStore() {
     const { subscribe, update } = writable(
         {
             name: "New Name",
-            diceList: [new DiceObj(10)],
+            diceList: [],
             sendNotification: true
         });
         
