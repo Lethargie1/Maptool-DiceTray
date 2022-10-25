@@ -57,7 +57,7 @@
     <SavedDiceTray bind:savedDiceComb={diceComb} />
     {/each}
 {/if}
-{JSON.stringify($trayContent)}
+
 
 
 <div class="relative z-20">
