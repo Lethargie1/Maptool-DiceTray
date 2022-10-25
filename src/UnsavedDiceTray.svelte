@@ -12,11 +12,14 @@
 
 
     let trayName;
-    const unsubscribe = trayContent.subscribe((value) => (trayName = value.name));
+    let sendToChat;
+    const unsubscribe = trayContent.subscribe((value) => {
+        trayName = value.name; sendToChat = value.sendNotification
+    });
     onDestroy(unsubscribe);
+
     //let trayName = $trayContent.name
     $: trayContent.changeName(trayName)
-
 
     function handleDiceRemoveId(dice) {
         trayContent.remove(dice)
@@ -52,12 +55,15 @@
 <div class="globalContainer ">
     <div class="flex shadowy w-full">
     <div  class="leftHeader"  >
-        <div class="flex justify-around">
+        <div class="flex justify-around flex-wrap gap-2">
             <div class:iconWrapper={true} on:click={() => handleSave()}>
                 <Icon name="save" class="w-8 h-8" />
             </div>
             <div class:iconWrapper={true} on:click={()=>handleDeleteAll()}>
                 <Icon name="garbage" class="stroke-red-700 w-8 h-8"/>
+            </div>
+            <div class:iconWrapper={sendToChat} class:iconWrapperClicked={!sendToChat} on:click={()=>trayContent.toggleNotification()}>
+                <Icon name="chat" class={`${sendToChat ? "stroke-green-500": "stroke-red-700"} w-8 h-8`} />
             </div>
         </div>
         <input
@@ -92,6 +98,11 @@
         @apply  hover:bg-slate-500 hover:bg-opacity-50 rounded-md p-2;
         box-shadow: -5px -5px 7px -3px rgb(182, 164, 60) inset, 5px 5px 7px -3px #ffffff inset,
             -1px -1px 3px -1px rgb(182, 164, 60), 2px 2px 3px -1px #ffffff
+    }
+    .iconWrapperClicked{
+        @apply  hover:bg-slate-500 hover:bg-opacity-50 rounded-md p-2 bg-opacity-50 bg-yellow-100;
+        box-shadow: 5px 5px 7px -3px rgb(182, 164, 60) inset, -3px -3px 5px -3px rgb(182, 164, 60) inset,
+            1px 1px 3px -1px rgb(182, 164, 60), -2px -2px 3px -1px #ffffff
     }
     .leftHeader {
         @apply p-2 flex justify-start flex-col rounded-l-md gap-2 items-stretch w-40  

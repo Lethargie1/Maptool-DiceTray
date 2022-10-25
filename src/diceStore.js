@@ -6,6 +6,7 @@ import { runArbitraryMacroJson } from "./macroCom";
 
 export let trayContent = createTrayStore()
 
+
 let messager = {
     postUpdate: () => null
 }
@@ -16,14 +17,18 @@ function createTrayStore() {
     const { subscribe, update } = writable(
         {
             name: "New Name",
-            diceList: [new DiceObj(10)]
+            diceList: [new DiceObj(10)],
+            sendNotification: true
         });
-
+        
     return {
         subscribe,
         changeName: (name) => {
             update( state => {state.name=name; return {...state}})
         }  ,
+        toggleNotification: () =>{
+            update( state => {state.sendNotification= !state.sendNotification; return {...state}})
+        },
         add: createAddDice(update),
         remove: createRemoveDice(update),
         startRoll: createStartRollDice(update),
@@ -43,7 +48,8 @@ function createAddDice(update) {
                 target: DiceObj.infoFrom(newDice),
                 diceList: state.diceList.map(x => DiceObj.infoFrom(x))
             }
-            messager.postUpdate(message)
+            if (state.sendNotification)
+                messager.postUpdate(message)
             return state
         });
         trayContent.startRoll(newDice)
@@ -61,7 +67,8 @@ function createRemoveDice(update) {
                 target: DiceObj.infoFrom(dice),
                 diceList: state.diceList.map(x => DiceObj.infoFrom(x))
             }
-            messager.postUpdate(message)
+            if (state.sendNotification)
+                messager.postUpdate(message)
             return state;
         });
         
@@ -81,7 +88,8 @@ function createStartRollDice(update) {
                     target: DiceObj.infoFrom(selected),
                     diceList: state.diceList.map(x => DiceObj.infoFrom(x))
                 }
-                messager.postUpdate(message)
+                if (state.sendNotification)
+                    messager.postUpdate(message)
             }
             selected.rolling = true
             DiceObj.clearCallback(selected)
@@ -106,7 +114,8 @@ function createRollConclude(update) {
                 target: DiceObj.infoFrom(selected),
                 diceList: state.diceList.map(x => DiceObj.infoFrom(x))
             }
-            messager.postUpdate(message)
+            if (state.sendNotification)
+                messager.postUpdate(message)
             return state
         })
     }
@@ -129,7 +138,8 @@ function createClearDice(update) {
                 target: null,
                 diceList: null
             }
-            messager.postUpdate(message)
+            if (state.sendNotification)
+                messager.postUpdate(message)
             return replaceStateDiceList(state,[])
         })
     }
@@ -145,7 +155,8 @@ function createReplaceAllDice(update) {
                 target: null,
                 diceList: newState.diceList.map(x => DiceObj.infoFrom(x))
             }
-            messager.postUpdate(message)
+            if (state.sendNotification)
+                messager.postUpdate(message)
             return newState
         })
         genList.forEach( x=> trayContent.startRoll(x))
