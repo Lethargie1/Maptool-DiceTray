@@ -40,13 +40,13 @@ function createAddDice(update) {
             state.diceList = [...state.diceList, newDice]
             let message = {
                 action: messaging.add,
-                target: DiceObj.infoFrom(dice),
+                target: DiceObj.infoFrom(newDice),
                 diceList: state.diceList.map(x => DiceObj.infoFrom(x))
             }
             messager.postUpdate(message)
             return state
         });
-        trayContent.startRoll(newDice,false)
+        trayContent.startRoll(newDice)
     }
 }
 
@@ -70,12 +70,12 @@ function createRemoveDice(update) {
 }
 
 function createStartRollDice(update) {
-    return (dice, sendMessage = true) => {
+    return (dice) => {
         update((state) => {
             let selected = state.diceList.find((d) => d.id === dice.id);
             if (!selected) return state;
             if (!selected.canRoll) return state
-            if (sendMessage && selected.rolling === false){
+            if (selected.rolling === false){
                 let message = {
                     action: messaging.roll,
                     target: DiceObj.infoFrom(selected),
@@ -148,7 +148,7 @@ function createReplaceAllDice(update) {
             messager.postUpdate(message)
             return newState
         })
-        genList.forEach( x=> trayContent.startRoll(x,false))
+        genList.forEach( x=> trayContent.startRoll(x))
     }
 }
 
