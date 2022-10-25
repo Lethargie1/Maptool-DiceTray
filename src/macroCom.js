@@ -271,7 +271,7 @@ async function sendAQueue(queue){
     const lastTray = lastMess[0].diceList
     let sentInfo= `<table style="border:1px solid black; margin: 0px; padding: 2px">
                 ${formatter.formatGroups(groupedMess)}
-                <tr><td>${formatter.formatDices(lastTray)}</td></tr>
+                <tr><td>${lastTray?.length ? formatter.formatDices(lastTray) : "empty tray"}</td></tr>
                 </table>` 
     if (process.env.NODE_ENV != 'production'){
         console.log(sentInfo)
