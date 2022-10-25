@@ -327,7 +327,10 @@ export const messager = (function () {
 
 
     async function postUpdate(message) {
-        console.log("getting message: " + message.action)
+        if (process.env.NODE_ENV != 'production'){
+            console.log("getting message: " + message.action)
+        }
+        
         currentBuffer = currentBuffer.then(
             state => {
                 state = storeMessage(state, message)
