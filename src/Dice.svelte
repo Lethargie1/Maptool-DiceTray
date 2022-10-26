@@ -29,13 +29,13 @@
 
 <div class="hover:ring-2 flex flex-col items-center" >
     <div
-        class="bg-transparent flex justify-center items-center text-center  select-none relative w-14 h-14 z-0"
+        class="bg-transparent flex justify-center items-center text-center  select-none relative w-12 h-12 z-0"
         on:click={handleClick}
         on:contextmenu={handleContext}
         on:mousedown={handleMouseDown}
     >
         <img
-            class="z-10 w-14 h-14 "
+            class="z-10 w-12 h-12 "
             class:absolute={useImageAsBackground}
             class:inset-0={useImageAsBackground}
             class:rotating = {diceContent.rolling}
