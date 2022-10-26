@@ -72,7 +72,7 @@
         />
     </div>
     <div  class="rightContainer" >
-        <TrayHole class="justify-start h-full content-start">
+        <TrayHole class="justify-start content-start">
             {#each $trayContent.diceList as dice, i (dice.id)}
                 <div
                     animate:flip={{ delay: 200, duration: 1000 }}
