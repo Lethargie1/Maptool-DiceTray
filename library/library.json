@@ -1,13 +1,13 @@
 {
   "name": "lib:DiceTray",
-  "version": "0.0.1",
+  "version": "0.1.0",
   "website": "",
   "gitUrl": "",
   "authors": ["Fabrice Valade"],
-  "license": "ZLib",
+  "license": "GPL-3.0",
   "namespace": "DiceTray",
-  "description": "A lightweigth web based dice roller",
-  "shortDescription": "A lightweigth web based dice roller",
+  "description": "A lightweigth webframe based dice roller. Use it to roll dice with a more intuitive feel than just typing a formula\n[macro(\"diceTrayLoader@lib:DiceTray\"):0] starts it\n\nClick on a dice to roll it. Right click to remove it",
+  "shortDescription": "A lightweigth webframe based dice roller",
   "allowsUriAccess": true,
   "licenseFile": "license.txt",
   "readMeFile": "README"

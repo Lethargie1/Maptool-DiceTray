@@ -13,6 +13,8 @@ import sizes from 'rollup-plugin-sizes';
 import { terser } from "rollup-plugin-terser";
 import css from 'rollup-plugin-css-only'
 import { v4 as uuidv4 } from 'uuid';
+import lib from './library/library.json'
+
 
 export default commandLineArgs => {
   let debug = commandLineArgs.configDebug
@@ -43,7 +45,8 @@ export default commandLineArgs => {
       debug ? null : css({ output: debug ? null : "bundle-"+uuidv4()+".css" }),
       resolve({ browser: true }),
       html({
-        publicPath: './'
+        publicPath: './',
+        title: `Dice tray ${lib.version}`
       }),
       replace({
         'process.env.NODE_ENV': debug ? JSON.stringify('development') : JSON.stringify('production'),

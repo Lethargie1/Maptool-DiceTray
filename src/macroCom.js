@@ -96,30 +96,7 @@ function groupQueue(queue) {
 }
 
 const formatter = (function () {
-    function NewGroup(group) {
-        let NotNew;
-        let info = `<table><tr><td>Put entirely new dice in</td></tr>`
-        if (group.length > 1) {
-            NotNew = group.slice(1)
-            let groupedRoll = {}
-            let ids = []
-            NotNew.forEach(nnm => {
-                if (nnm.target.id in groupedRoll)
-                    groupedRoll[nnm.target.id].push(nnm)
-                else {
-                    groupedRoll[nnm.target.id] = [nnm]
-                    ids.push(nnm.target.id)
-                }
-            })
-            ids.forEach(id => info += `<tr><td>${RollGroup(groupedRoll[id])}</tr></td>`)
-        }
-        else
-            info += "<tr><td>didnt roll them</tr></td>"
-        info += "</table>"
-        return info
-
-
-    }
+ 
     function AddGroup(group) {
         switch (group.length) {
             case 1:
@@ -140,9 +117,23 @@ const formatter = (function () {
             return `Rolled a ${group[0].target.display} and got a ${group[1].target.value}`
         throw ("Roll group length violation for formatter")
     }
-    const formatDiceListInHtml = (diceList, markedDice = null) => {
+    const formatDiceListInHtml = (diceList, markedDice = {
+        add:[],
+        roll:[],
+        result:[]
+    }) => {
         const wrappedDices = diceList.map(dice => {
-            const color = dice.id === markedDice?.id ? "bgcolor=aqua" : ""
+            const color = (()=>{
+                if (markedDice.add.includes(dice.id))
+                    return "bgcolor=#66FF33"
+                if (markedDice.roll.includes(dice.id))
+                    return "bgcolor=aqua"
+                if (markedDice.result.includes(dice.id))
+                    return "bgcolor=#FF9933"
+                return ""
+            })()
+            
+            dice.id === markedDice?.id ? "bgcolor=aqua" : ""
             return `<table width=40 style="border:1px solid black; margin: 0px; padding: 0px">
                     <tr><td bgcolor=yellow style="margin: 0px; padding: 0px">${dice.display}</td></tr>
                     <tr><td ${color} align=center valign=middle style="margin: 0px; padding: 0px">${dice.rolling ? "?" : dice.value}</td></tr>
@@ -169,11 +160,9 @@ const formatter = (function () {
 
     function format(groupedMessage) {
         let action = {};
-        action[messaging.new] = NewGroup
         action[messaging.add] = AddGroup
         action[messaging.roll] = RollGroup
         action[messaging.remove] = group => `Removed a ${group[0].target.display} with value ${group[0].target.value}`
-        action[messaging.clear] = group => `Cleared the tray`
         action[messaging.rollResult] = group => `Received a roll from a ${group[0].target.display} with value ${group[0].target.value}`
         const linedMessages = groupedMessage.reduce((info, currentGroup) => {
             let line;
@@ -195,11 +184,31 @@ const formatter = (function () {
 async function sendAQueue(queue) {
 
     const groupedMess = groupQueue(queue)
+    let moddedDice ={
+        add:[],
+        roll:[],
+        result:[]
+    }
+    groupedMess.forEach(g =>{
+        const {action, target} = g[0]
+        switch(action){
+            case messaging.add:
+                moddedDice.add.push(target.id)
+                break
+            case messaging.rollResult:
+                moddedDice.result.push(target.id)
+                break
+            case messaging.roll:
+                moddedDice.roll.push(target.id)
+                break
+            default:
+                break
+        }
+    })
     const lastMess = queue.slice(-1)
     const lastTray = lastMess[0].diceList
     let sentInfo = `<table style="border:1px solid black; margin: 0px; padding: 2px">
-                ${formatter.formatGroups(groupedMess)}
-                <tr><td>${lastTray?.length ? formatter.formatDices(lastTray) : "empty tray"}</td></tr>
+                <tr><td>${lastTray?.length ? formatter.formatDices(lastTray, moddedDice) : "empty tray"}</td></tr>
                 </table>`
     if (process.env.NODE_ENV != 'production') {
         console.log(sentInfo)
@@ -211,7 +220,7 @@ async function sendAQueue(queue) {
 
 
 export const messager = (function () {
-    const bufferingTime = 500
+    const bufferingTime = 1000
     const rollWaitingTime = 2000
     let stopBufferingTimeout = null;
     let currentBuffer = Promise.resolve({
