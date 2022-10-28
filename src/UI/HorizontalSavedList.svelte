@@ -15,7 +15,7 @@
 
 </script>
 
-<div class="border-2 border-red-600">
+<div>
 {#each $savedDiceCombination as diceComb, i (diceComb.id)}
     <div
         class="grid-container "

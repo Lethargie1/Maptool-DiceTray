@@ -7,11 +7,14 @@
     export let activated = false
 </script>
 
+<div class="relative">
 <div class:activated on:click={clickHandler} class="button ">
     <Icon name={iconName} />
-    <div class="icon-tt">
-        {toolTip}
-    </div>
+    
+</div>
+<div class="icon-tt">
+    {toolTip}
+</div>
 </div>
 
 <style>
@@ -23,14 +26,14 @@
         @apply bg-red-600;
     }
     .icon-tt {
-        @apply bg-slate-200 text-sm w-20 p-1 rounded-lg border-slate-600;
+        @apply bg-slate-100 text-sm w-20 p-1 rounded-lg border-slate-600 border-2;
         visibility: hidden;
         position: absolute;
         left: 100%;
         top: 0%;
-        z-index: 1;
+        z-index: 100;
     }
-    .button:hover .icon-tt {
+    .button:hover + .icon-tt {
         visibility: visible;
     }
 </style>

@@ -27,7 +27,7 @@
     }
 </script>
 
-<div class="flex flex-col justify-start h-screen border-2 border-yellow-600">
+<div class="flex flex-col justify-start h-screen w-screen">
     <div class="grow-0">
         <HorizontalControlBar
             bind:displayTray

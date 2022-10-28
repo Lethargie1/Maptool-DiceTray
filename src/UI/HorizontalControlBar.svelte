@@ -75,7 +75,7 @@
         grid-column-start: 3;
     }
     .namepill {
-        @apply rounded-b-xl bg-opacity-50 bg-slate-200 flex justify-center items-center ml-2 p-1 px-3 ;
+        @apply rounded-b-xl bg-opacity-50 bg-slate-200 flex justify-center items-center ml-2 p-1 px-3 border-b-2 border-x-2 border-slate-700;
         grid-row-start: 2;
         grid-column-start: 1;
         grid-column-end: span 2;
