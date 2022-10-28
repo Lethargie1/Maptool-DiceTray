@@ -1,8 +1,8 @@
 <script>
     import TrayHole from "./TrayHole.svelte";
-    import Dice from "./Dice.svelte";
-    import Icon from "./Icon.svelte";
-    import { trayContent, savedDiceCombination } from "./diceStore.js";
+    import Dice from "./UI/Dice.svelte";
+    import Icon from "./UI/Icon.svelte";
+    import { trayContent, savedDiceCombination } from "./Helper/diceStore.js";
 
     export let savedDiceComb = null;
 

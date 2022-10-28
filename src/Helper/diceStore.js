@@ -2,7 +2,6 @@ import { writable } from "svelte/store";
 import { v4 as uuidv4 } from 'uuid';
 
 import { DiceObj } from "./DiceObj";
-import { runArbitraryMacroJson } from "./macroCom";
 
 export let trayContent = createTrayStore()
 
@@ -16,7 +15,7 @@ export function attachMessenger(mess){
 function createTrayStore() {
     const { subscribe, update } = writable(
         {
-            name: "New Name",
+            name: "New tray",
             diceList: [],
             sendNotification: true
         });

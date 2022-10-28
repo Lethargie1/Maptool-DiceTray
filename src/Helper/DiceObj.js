@@ -1,11 +1,11 @@
 import { v4 as uuidv4 } from 'uuid';
-import importedSvgStrd20 from "../assets/d20.svg";
-import importedSvgStrd12 from "../assets/d12.svg";
-import importedSvgStrd10 from "../assets/d10.svg";
-import importedSvgStrd8 from "../assets/d8.svg";
-import importedSvgStrd6 from "../assets/d6.svg";
-import importedSvgStrd4 from "../assets/d4.svg";
-import importedSvgStrdx from "../assets/+x.svg";
+import importedSvgStrd20 from "../../assets/d20.svg";
+import importedSvgStrd12 from "../../assets/d12.svg";
+import importedSvgStrd10 from "../../assets/d10.svg";
+import importedSvgStrd8 from "../../assets/d8.svg";
+import importedSvgStrd6 from "../../assets/d6.svg";
+import importedSvgStrd4 from "../../assets/d4.svg";
+import importedSvgStrdx from "../../assets/+x.svg";
 
 
 export class DiceObj {

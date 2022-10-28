@@ -1,7 +1,7 @@
 
 import App from './App.svelte';
-import { attachMessenger} from './diceStore';
-import { messager } from './macroCom';
+import { attachMessenger} from './Helper/diceStore';
+import { messager } from './Com/macroCom';
 
 
 

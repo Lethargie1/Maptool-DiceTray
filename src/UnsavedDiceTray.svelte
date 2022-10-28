@@ -1,13 +1,13 @@
 <script>
     import TrayHole from "./TrayHole.svelte";
-    import Dice from "./Dice.svelte";
-    import Icon from "./Icon.svelte";
+    import Dice from "./UI/Dice.svelte";
+    import Icon from "./UI/Icon.svelte";
     import TrayTotal from "./TrayTotal.svelte";
     import { flip } from "svelte/animate";
     import { fade } from "svelte/transition";
-    import { trayContent, savedDiceCombination } from "./diceStore.js";
+    import { trayContent, savedDiceCombination } from "./Helper/diceStore.js";
     import { v4 as uuidv4 } from "uuid";
-    import { DiceObj } from "./DiceObj.js";
+    import { DiceObj } from "./Helper/DiceObj.js";
     import { onDestroy } from "svelte";
 
     let trayName;

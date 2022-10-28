@@ -3,11 +3,11 @@
         trayContent,
         PossibleDices,
         savedDiceCombination,
-    } from "./diceStore.js";
-    import Dice from "./Dice.svelte";
-    import { DiceObj } from "./DiceObj.js";
+    } from "./Helper/diceStore.js";
+    import Dice from "./UI/Dice.svelte";
+    import { DiceObj } from "./Helper/DiceObj.js";
     import ModifierModal from "./ModifierModal.svelte";
-    import Icon from "./Icon.svelte";
+    import Icon from "./UI/Icon.svelte";
     import TrayHole from "./TrayHole.svelte";
     import SavedDiceTray from "./SavedDiceTray.svelte";
     import UnsavedDiceTray from "./UnsavedDiceTray.svelte";

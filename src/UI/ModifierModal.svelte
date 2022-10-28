@@ -12,7 +12,7 @@
 {#if showModal}
     <Modal on:accept={()=>{showModal=false ; success()}} on:cancel={()=>{showModal=false}}>
         <div class="flex flex-col items-center" slot="header">
-            Ajouter un modificateur
+            Add a modifier
         </div>
         <div class="flex flex-col items-center">
             <input type=number bind:value class="text-center border-2 border-slate-400 p-2 rounded-sm" />

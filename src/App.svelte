@@ -1,5 +1,7 @@
 <script>
-    import Tray from "./Tray.svelte"
+    import Tray from "./UI/Tray.svelte"
+
+    
 </script>
 <Tray/>
 <style global lang="postcss">

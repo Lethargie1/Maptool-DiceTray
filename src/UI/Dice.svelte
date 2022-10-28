@@ -1,5 +1,5 @@
 <script>
-    import { DiceObj } from "./DiceObj.js";
+    import { DiceObj } from "../Helper/DiceObj.js";
     import { onDestroy } from 'svelte';
     
 
@@ -27,9 +27,9 @@
 
 </script>
 
-<div class="hover:ring-2 flex flex-col items-center" >
+<div class=" flex flex-col items-center " >
     <div
-        class="bg-transparent flex justify-center items-center text-center  select-none relative w-12 h-12 z-0"
+        class="flex justify-center items-center text-center  select-none relative w-12 h-12 z-0 shrink-0"
         on:click={handleClick}
         on:contextmenu={handleContext}
         on:mousedown={handleMouseDown}
@@ -50,17 +50,13 @@
             {/if}
         {:else}
             <div class=" z-20 shadowy">
-                {!diceContent.maximum && diceContent.value
-                    ? diceContent.value
-                    : "?"}
+                {!diceContent.maximum
+                    ? diceContent.display
+                    : diceContent.maximum}
             </div>
         {/if}
     </div>
-    {#if displayMode}
-        <div class=" z-20 shadowy">
-            {diceContent.display}
-        </div>
-    {/if}
+
 </div>
 
 <style>
@@ -84,4 +80,5 @@
         text-shadow: 0 2px 2px white, 2px 0 2px white, -2px 0 2px white,
             0 -2px 2px white;
     }
+
 </style>
