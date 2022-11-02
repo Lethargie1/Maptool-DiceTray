@@ -57,6 +57,8 @@
 
 <style>
 .container {
-        @apply grid gap-1 grid-cols-2 grid-rows-2 bg-transparent w-fit h-fit;
+        @apply grid grid-cols-2 grid-rows-2 bg-transparent w-fit h-fit;
+        gap: 0.25rem;
+        border: solid blue 1px
     }
 </style>

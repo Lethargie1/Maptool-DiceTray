@@ -8,4 +8,8 @@
     @tailwind base;
     @tailwind components;
     @tailwind utilities;
+
+    html {
+    font-size: 26px;
+  }
 </style>

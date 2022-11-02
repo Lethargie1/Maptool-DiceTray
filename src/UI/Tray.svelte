@@ -48,3 +48,9 @@
         </div>
     {/if}
 </div>
+
+<style global>
+    *{
+        margin: 0; padding: 0;
+    }
+</style>

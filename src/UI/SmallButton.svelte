@@ -7,7 +7,7 @@
     export let activated = false
 </script>
 
-<div class="relative">
+<div class="relative wrap">
 <div class:activated on:click={clickHandler} class="button ">
     <Icon name={iconName} />
     
@@ -19,7 +19,8 @@
 
 <style>
     .button {
-        @apply hover:bg-slate-500 hover:bg-opacity-50 rounded-md p-1 bg-opacity-50 bg-slate-300 w-6 relative;
+        @apply hover:bg-slate-500 hover:bg-opacity-50 rounded-md p-1 bg-opacity-50 bg-slate-300 relative;
+        
     }
 
     .activated {
@@ -35,5 +36,9 @@
     }
     .button:hover + .icon-tt {
         visibility: visible;
+    }
+    .wrap{
+        @apply w-6 h-6;
+        outline: solid red 1px
     }
 </style>

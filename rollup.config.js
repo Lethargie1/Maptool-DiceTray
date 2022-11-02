@@ -14,7 +14,7 @@ import { terser } from "rollup-plugin-terser";
 import css from 'rollup-plugin-css-only'
 import { v4 as uuidv4 } from 'uuid';
 import lib from './library/library.json'
-
+import postcssPresetEnv from 'postcss-preset-env';
 
 export default commandLineArgs => {
   let debug = commandLineArgs.configDebug
@@ -36,7 +36,13 @@ export default commandLineArgs => {
           postcss: {
               plugins: [
                   tailwind, 
-                  autoprefixer
+                  postcssPresetEnv(
+                    { 
+                      stage: 1,
+                      minimumVendorImplementations: 1,
+                      browsers: 'defaults , safari >= 15',
+                      autoprefixer: { grid: "autoplace" }
+                    })
               ]
           }
         }),
