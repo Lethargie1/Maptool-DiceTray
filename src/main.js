@@ -28,6 +28,7 @@ function replacer(k, v) {
 window.addEventListener('load', (event) => {
 
 	setTimeout(() => {
+		let a = document.head.getElementsByTagName('*');
 		if(a[0].tagName === "STYLE")
 		{
 			a[0].remove()

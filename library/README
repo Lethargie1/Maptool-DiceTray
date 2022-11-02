@@ -1,7 +1,7 @@
 This add on give you frame (A dice tray) that allow you to roll dices
-to start it, call [macro("diceTrayLoader@lib:DiceTray"):0] anywhere. This will load the frame.
+to start it, call [macro("diceTrayLoader@lib:DiceTray"):0] or [macro("diceTrayOverlay@lib:DiceTray"):0] anywhere. This will load the frame or the overlay.
 
 The dice tray automatically post all action on it to the maptool chat. You have a small windows between actions that makes it so they are grouped.
-The arrow pillbox at the bottom open a small "memory" that allow you to store dice group for easy access. Note however that these do not persist when you close the dice tray frame.
+The arrow pillbox at the right open a small "memory" that allow you to store dice group for easy access. Note however that these do not persist when you close the dice tray frame.
 
 This is a very very early release. Mostly to test and play. If you got any advice/idea/feedback feel free to hit me up on discord lethargie#9412
