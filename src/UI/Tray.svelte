@@ -27,8 +27,8 @@
     }
 </script>
 
-<div class="flex flex-col justify-start h-screen w-screen">
-    <div class="grow-0">
+<div class="grid grid-rows-2 whole">
+    <div >
         <HorizontalControlBar
             bind:displayTray
             bind:displaySaved
@@ -38,17 +38,27 @@
         />
     </div>
     {#if displayTray}
-        <div class="grow">
+        <div class="overflow-y-auto tray">
             <ActiveDices />
         </div>
     {/if}
     {#if displaySaved}
-        <div class="grow overflow-y-auto">
+        <div class="overflow-y-auto">
             <HorizontalSavedList on:load={showTray} />
         </div>
     {/if}
 </div>
 
-<style global>
-
+<style>
+    .tray {
+        
+    }
+    .whole{
+        grid-template-rows: max-content 1fr;
+        position:absolute;
+  top:0px;
+  right:0px;
+  bottom:20%;
+  left:0px;
+    }
 </style>

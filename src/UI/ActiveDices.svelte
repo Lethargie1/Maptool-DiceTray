@@ -31,7 +31,7 @@
 
 <style>
     .container{
-        @apply flex flex-wrap justify-start content-start items-center h-full m-0
+        @apply flex flex-wrap justify-start content-start items-center m-0
     }
     .diceWrapper {
         @apply bg-transparent flex items-center justify-center cursor-pointer hover:ring-2;
