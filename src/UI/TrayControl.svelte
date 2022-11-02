@@ -13,7 +13,11 @@
 
     function handleReroll() {
         $trayContent.diceList.forEach((x) => trayContent.startRoll(x));
-        displayTray=true;
+        if (!displayTray){
+            displayTray=true;
+            dispatch("showTray",null)
+        }
+        
     }
 
     function handleSave() {
@@ -59,6 +63,5 @@
 .container {
         @apply grid grid-cols-2 grid-rows-2 bg-transparent w-fit h-fit;
         gap: 0.25rem;
-        border: solid blue 1px
     }
 </style>

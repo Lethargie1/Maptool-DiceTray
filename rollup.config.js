@@ -69,7 +69,7 @@ export default commandLineArgs => {
           limit: 0 
         }),
         sizes(),
-        !debug && terser()
+        false && !debug && terser()
     ]
   }
 };

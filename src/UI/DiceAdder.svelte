@@ -58,9 +58,6 @@
     }
     .container{
         @apply flex flex-wrap gap-0 relative rounded-md justify-center items-center;
-        display:-webkit-flex;
-        margin-bottom: 0px;
-        padding-bottom: 0px;
-        outline: solid yellow 1px;
+
     }
 </style>

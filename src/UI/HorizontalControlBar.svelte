@@ -63,13 +63,11 @@
         @apply grid grid-cols-2  w-fit items-stretch justify-items-stretch py-2 pl-2 bg-opacity-50 bg-slate-200 rounded-l-xl border-y-2 border-l-2 border-slate-700 border-opacity-50;
         grid-row-start: 1;
         grid-column-start: 1;
-        outline: solid red 1px
     }
     .adder {
         @apply px-1 bg-opacity-50 bg-slate-200 w-fit border-y-2 border-slate-700 border-opacity-50;
         grid-row-start: 1;
         grid-column-start: 2;
-        outline: solid red 1px;
         display: flex;
         align-items: center;
     }
@@ -87,6 +85,5 @@
     }
     .whole {
         min-width: 330px;
-        border: solid blue 1px
     }
 </style>

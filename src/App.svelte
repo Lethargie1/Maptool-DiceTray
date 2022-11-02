@@ -10,6 +10,6 @@
     @tailwind utilities;
 
     html {
-    font-size: 26px;
+    font-size: 16px;
   }
 </style>

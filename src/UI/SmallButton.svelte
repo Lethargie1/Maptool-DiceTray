@@ -39,6 +39,5 @@
     }
     .wrap{
         @apply w-6 h-6;
-        outline: solid red 1px
     }
 </style>

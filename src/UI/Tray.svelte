@@ -38,7 +38,7 @@
         />
     </div>
     {#if displayTray}
-        <div class="grow overflow-y-auto">
+        <div class="grow">
             <ActiveDices />
         </div>
     {/if}
@@ -50,7 +50,5 @@
 </div>
 
 <style global>
-    *{
-        margin: 0; padding: 0;
-    }
+
 </style>
