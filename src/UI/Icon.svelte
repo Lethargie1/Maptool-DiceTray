@@ -26,6 +26,16 @@
         },
         {
             box:24,
+            name: "arrowright",
+            svg:`<path stroke-linecap="round" stroke-linejoin="round" d="M4.5 12h15m0 0l-6.75-6.75M19.5 12l-6.75 6.75" />`
+        },
+        {
+            box:24,
+            name: "arrowleft",
+            svg:`<path stroke-linecap="round" stroke-linejoin="round" d="M19.5 12h-15m0 0l6.75 6.75M4.5 12l6.75-6.75" />`
+        },
+        {
+            box:24,
             name:"arrowup",
             svg:`<path stroke-linecap="round" stroke-linejoin="round" d="M12 19.5v-15m0 0l-6.75 6.75M12 4.5l6.75 6.75" />`
         },

@@ -3,16 +3,15 @@
     import TrayControl from "./TrayControl.svelte";
     import DiceAdder from "./DiceAdder.svelte";
     import MetaControl from "./MetaControl.svelte";
-    import { slide } from 'svelte/transition';
+    import { slide } from "svelte/transition";
+    import Icon from "./Icon.svelte"
     let trayContent = getContext("trayContent");
 
     export let displayTray = false;
     export let displaySaved = false;
-
-    
-
-    
-
+    let savedDisplay = 0;
+    let showControls = true;
+    $: iconName = showControls ? "arrowleft" : "arrowright"
     let trayName;
     let sendToChat;
     const unsubscribe = trayContent.subscribe((value) => {
@@ -27,28 +26,90 @@
         (previousTotal, currentDice) => previousTotal + currentDice.value,
         0
     );
+
+    function horizontalSlide(node, {
+	delay = 0,
+	duration = 800
+}) {
+    const o = parseFloat(getComputedStyle(node).width);
+    const h = parseFloat(getComputedStyle(node).height);
+	return {
+		delay,
+		duration,
+		css: (t,u) => `transform: translate(-${u*o}px,0);
+        clip-path: inset(0px 5px);`
+	};
+}
+function horizontalShrink(node, {
+	delay = 0,
+	duration = 800
+}) {
+    const o = parseFloat(getComputedStyle(node).width);
+    const h = parseFloat(getComputedStyle(node).height);
+	return {
+		delay,
+		duration,
+		css: (t,u) => `height: ${h}px;width: ${t*o}px;clip-path: inset(0px 5px);`
+	};
+}
+
+function handleStretcher(){
+    if (showControls){
+        if (displaySaved)
+            savedDisplay = 2
+        else if (displayTray)
+            savedDisplay = 1
+        else
+            savedDisplay = 0
+        displaySaved=false
+        displayTray =false
+        showControls = false
+
+    }else{
+        if (savedDisplay == 2)
+            displaySaved = true
+        else if (savedDisplay == 1)
+            displayTray = true
+
+        showControls = true
+
+    }
+}
 </script>
 
-<div class="grid justify-start items-stretch whole">
-    <div class="controlsLeft">
-        <div class="px-1 flex justify-center items-center">
-            <TrayControl bind:displayTray on:showTray/>
-        </div>
-        <div
-            class="flex justify-center items-center border-x-2 border-slate-700 "
-        >
-            {trayTotal}
+<div class="wrapper">
+    {#if showControls}
+    <div class="contentBox" transition:horizontalShrink>
+        <div class="content ">
+            <div class="controlsLeft">
+                <div class="px-1 flex justify-center items-center">
+                    <TrayControl bind:displayTray on:showTray />
+                </div>
+                <div
+                    class="flex justify-center items-center border-x-2 border-slate-700 border-opacity-50"
+                >
+                    {trayTotal}
+                </div>
+            </div>
+            <div class="adder">
+                <DiceAdder on:addDice />
+            </div>
+            <div class="meta">
+                <div
+                    class="px-1 flex justify-center items-center border-l-2 border-slate-700 border-opacity-50"
+                >
+                    <MetaControl bind:displaySaved on:showSaved />
+                </div>
+            </div>
         </div>
     </div>
-    <div class="adder">
-        <DiceAdder on:addDice/>
-    </div>
-    <div class="meta">
-        <div class="px-1 flex justify-center items-center border-l-2 border-slate-700">
-            <MetaControl bind:displaySaved on:showSaved/>
-        </div>
-    </div>
-    {#if displayTray}
+    {/if}
+    <button class="controlHider" on:click={()=>handleStretcher()}> 
+        <Icon name={iconName} />
+    </button>
+    
+</div>
+{#if displayTray}
         <div class="namepill" transition:slide>
             <input
                 bind:value={trayName}
@@ -56,32 +117,50 @@
             />
         </div>
     {/if}
-</div>
-
 <style>
+    .contentBox{
+        @apply w-fit h-14 ;
+        position:static
+ 
+    }
+    .content{
+        @apply grid justify-start items-stretch whole h-14;
+        position: relative;
+        right: 0px;
+        width: 31.25rem
+        
+    }
+    .controlHider {
+        @apply w-7 h-14 border-slate-700 border-opacity-50 border-2 rounded-lg;
+        grid-row-start: 1;
+        grid-column-start: 2;
+
+    }
+    .wrapper {
+        @apply grid justify-start items-stretch w-fit bg-opacity-50 bg-slate-200 border-slate-700 border-opacity-50 rounded-xl p-2 border-2;
+
+        
+    }
     .controlsLeft {
-        @apply grid grid-cols-2  w-fit items-stretch justify-items-stretch py-2 pl-2 bg-opacity-50 bg-slate-200 rounded-l-xl border-y-2 border-l-2 border-slate-700 border-opacity-50;
+        @apply grid grid-cols-2  w-fit items-stretch justify-items-stretch;
         grid-row-start: 1;
         grid-column-start: 1;
     }
     .adder {
-        @apply px-1 bg-opacity-50 bg-slate-200 w-fit border-y-2 border-slate-700 border-opacity-50;
+        @apply px-1 w-fit;
         grid-row-start: 1;
         grid-column-start: 2;
         display: flex;
         align-items: center;
     }
     .meta {
-        @apply flex pr-2 py-2 items-stretch bg-opacity-50 bg-slate-200 rounded-r-xl w-fit border-y-2 border-r-2 border-slate-700 border-opacity-50 ;
+        @apply flex items-stretch  w-fit;
         grid-row-start: 1;
         grid-column-start: 3;
     }
     .namepill {
-        @apply rounded-b-xl bg-opacity-50 bg-slate-200 flex justify-center items-center ml-2 p-1 px-3 border-b-2 border-x-2 border-slate-700;
-        grid-row-start: 2;
-        grid-column-start: 1;
-        grid-column-end: span 2;
-        justify-self: start 
+        @apply rounded-b-xl bg-opacity-50 bg-slate-200 flex justify-center items-center ml-2 p-1 px-3 border-b-2 border-x-2 border-slate-700 w-fit;
+
     }
     .whole {
         min-width: 330px;
