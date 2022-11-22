@@ -1,27 +1,13 @@
 
 import App from './App.svelte';
 import { attachMessenger} from './Helper/diceStore';
-import { messager } from './Com/macroCom';
+import { messager } from './Com/diceMessager';
 
 
 
 
 attachMessenger(messager)
 
-function rep2(k,v) {
-	return k && v && typeof v !== "number" ? v.tagName + " " +(Array.isArray(v) ? "[object Array]" : "" + v) : v; 
-}
-
-function replacer(k, v) { 
-	if (k && v && typeof v !== "number"){
-
-		return `${v.tagName} ${v.outerHTML}`
-
-	}else{
-		return v;
-	}
-	
-}
 
 
 //this thing gets me rid of the annoying style that maptool try to inject
