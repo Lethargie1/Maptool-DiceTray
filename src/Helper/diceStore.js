@@ -164,20 +164,38 @@ function createReplaceAllDice(update) {
 
 
 
-export let savedDiceCombination = new writable([
-    {
-        name: "initial combo",
-        id: uuidv4(),
-        diceList: [
-            new DiceObj(12), new DiceObj(12), new DiceObj(6)
-        ]
-    }
-])
+export let savedDiceCombination = new writable([])
 ComFunctions.getPlayerData().then(value => {
+    if (process.env.NODE_ENV != 'production') {
+        let savedState = [
+            {
+                name: "initial combo",
+                id: uuidv4(),
+                diceList: [
+                    new DiceObj(12), new DiceObj(12), new DiceObj(6)
+                ]
+            }
+        ]
+        let strState = JSON.stringify(savedState)
+        let backState = JSON.parse(strState)
+        let mappedState = backState.map(comb => {
+            let newList = comb.diceList.map(strDice => DiceObj.fromStringify(strDice))
+            comb.diceList=newList
+            return comb
+        })
+        savedDiceCombination.update(state => mappedState)
+    }
     if (value){ 
         if (value && Array.isArray(value) && value.length>0){
-            if("name" in value[0] && "id" in value[0])
-                savedDiceCombination.set(value)
+            if("name" in value[0] && "id" in value[0]){
+                let mappedState = value.map(comb => {
+                    let newList = comb.diceList.map(strDice => DiceObj.fromStringify(strDice))
+                    comb.diceList=newList
+                    return comb
+                })
+                savedDiceCombination.update(state => mappedState)
+            }
+                
         }
     }
 })

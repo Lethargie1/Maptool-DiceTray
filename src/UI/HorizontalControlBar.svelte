@@ -3,7 +3,7 @@
     import TrayControl from "./TrayControl.svelte";
     import DiceAdder from "./DiceAdder.svelte";
     import MetaControl from "./MetaControl.svelte";
-    import { slide } from "svelte/transition";
+    import { slide, fade } from "svelte/transition";
     import Icon from "./Icon.svelte"
     let trayContent = getContext("trayContent");
 
@@ -80,7 +80,7 @@ function handleStretcher(){
 <div class="wrapper">
     {#if showControls}
     <div class="contentBox" transition:horizontalShrink>
-        <div class="content ">
+        <div class="content" in:fade="{{ delay: 200}}" out:fade>
             <div class="controlsLeft">
                 <div class="px-1 flex justify-center items-center">
                     <TrayControl bind:displayTray on:showTray />
@@ -113,7 +113,7 @@ function handleStretcher(){
         <div class="namepill" transition:slide>
             <input
                 bind:value={trayName}
-                class="rounded-sm border-slate-500 text-center font-semibold text-base p-1 bg-opacity-20 bg-slate-400 w-52"
+                class="rounded-sm border-slate-500 text-center font-semibold text-base p-1 bg-opacity-100 bg-slate-300 w-52"
             />
         </div>
     {/if}
@@ -131,7 +131,7 @@ function handleStretcher(){
         
     }
     .controlHider {
-        @apply w-7 h-14 border-slate-700 border-opacity-50 border-2 rounded-lg;
+        @apply w-7 h-14 border-slate-700 border-opacity-50 border-2 rounded-lg bg-opacity-50 bg-slate-300 hover:bg-slate-500 hover:bg-opacity-50;
         grid-row-start: 1;
         grid-column-start: 2;
 
@@ -160,6 +160,7 @@ function handleStretcher(){
     }
     .namepill {
         @apply rounded-b-xl bg-opacity-50 bg-slate-200 flex justify-center items-center ml-2 p-1 px-3 border-b-2 border-x-2 border-slate-700 w-fit;
+        --pointermap: block;
 
     }
     .whole {

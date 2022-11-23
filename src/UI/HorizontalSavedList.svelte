@@ -19,7 +19,6 @@
 {#each $savedDiceCombination as diceComb, i (diceComb.id)}
     <div
         class="grid-container "
-        animate:flip={{ delay: 200, duration: 1000 }}
         transition:fade={{ duration: 200 }}
     >
         <div class="namepill" transition:slide>

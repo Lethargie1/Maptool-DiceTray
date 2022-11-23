@@ -15,7 +15,13 @@
             Add a modifier
         </div>
         <div class="flex flex-col items-center">
-            <input type=number bind:value class="text-center border-2 border-slate-400 p-2 rounded-sm" />
+            <input type=number bind:value class="text-center border-2 border-slate-400 p-2 rounded-sm modalinput" />
         </div>
     </Modal>
 {/if}
+
+<style>
+    .modalinput{
+        --pointermap: block;
+    }
+</style>

@@ -33,6 +33,11 @@ export class DiceObj {
         }
         return newDice;
     }
+    static fromStringify(str){
+        let newDice =new DiceObj(str.maximum)
+        newDice.value = str.value
+        return newDice
+    }
     static infoFrom(other){
         return {
             maximum: other.maximum,

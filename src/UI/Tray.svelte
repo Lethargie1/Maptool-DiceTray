@@ -8,6 +8,7 @@
     } from "../Helper/diceStore.js";
     import { setContext } from "svelte";
     import HorizontalSavedList from "./HorizontalSavedList.svelte";
+    import { fade } from "svelte/transition";
 
     setContext("trayContent", trayContent);
     setContext("possiblesDices", PossibleDices);
@@ -38,12 +39,12 @@
         />
     </div>
     {#if displayTray}
-        <div class="overflow-y-auto tray">
+        <div class="overflow-y-auto tray" in:fade="{{ delay: 200}}" out:fade>
             <ActiveDices />
         </div>
     {/if}
     {#if displaySaved}
-        <div class="overflow-y-auto">
+        <div class="overflow-y-auto" in:fade="{{ delay: 200}}" out:fade>
             <HorizontalSavedList on:load={showTray} />
         </div>
     {/if}
@@ -58,7 +59,7 @@
         position:absolute;
   top:0px;
   right:0px;
-  bottom:20%;
+  bottom:5px;
   left:0px;
     }
 </style>
