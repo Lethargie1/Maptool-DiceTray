@@ -1,6 +1,6 @@
 import { writable } from "svelte/store";
 import { v4 as uuidv4 } from 'uuid';
-
+import { ComFunctions } from "../Com/macroCom.js"
 import { DiceObj } from "./DiceObj";
 
 export let trayContent = createTrayStore()
@@ -173,8 +173,17 @@ export let savedDiceCombination = new writable([
         ]
     }
 ])
-
-
+ComFunctions.getPlayerData().then(value => {
+    if (value){ 
+        if (value && Array.isArray(value) && value.length>0){
+            if("name" in value[0] && "id" in value[0])
+                savedDiceCombination.set(value)
+        }
+    }
+})
+const unsubscribe = savedDiceCombination.subscribe(value => {
+	ComFunctions.setPlayerData(value);
+});
 
 export const PossibleDices = [
     new DiceObj(0), new DiceObj(4), new DiceObj(6), new DiceObj(8), new DiceObj(10), new DiceObj(12), new DiceObj(20)

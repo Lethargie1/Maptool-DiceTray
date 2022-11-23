@@ -1,4 +1,4 @@
-import {runArbitraryMacroJson} from "./macroCom.js"
+import {runArbitraryMacro} from "./macroCom.js"
 import { v4 as uuidv4 } from 'uuid';
 
 const messaging = {
@@ -181,7 +181,7 @@ async function sendAQueue(queue) {
         return null
 
     }
-    runArbitraryMacroJson("broadcast", sentInfo)
+    runArbitraryMacro.textNoResponse("broadcast", sentInfo)
 }
 
 
